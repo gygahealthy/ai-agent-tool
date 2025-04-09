@@ -1,14 +1,28 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  output: "export",
   reactStrictMode: true,
   compiler: {
     removeConsole: process.env.NODE_ENV === "production",
   },
+  webpack: (config) => {
+    // Add support for Web Workers
+    config.module.rules.push({
+      test: /\.worker\.ts$/,
+      loader: "worker-loader",
+      options: {
+        filename: "static/[hash].worker.js",
+      },
+    });
+
+    return config;
+  },
   images: {
+    unoptimized: true,
     remotePatterns: [
       {
         protocol: "https",
-        hostname: "**.mobifone.vn",
+        hostname: "**.ts.net",
         pathname: "/**",
       },
       {
@@ -38,24 +52,6 @@ const nextConfig = {
       },
       // Add other domains if needed, following the same pattern
     ],
-  },
-  async headers() {
-    return [
-      {
-        source: "/:path*",
-        headers: [
-          {
-            key: "Content-Security-Policy",
-            value:
-              "frame-ancestors 'self' https://*.mobifone.vn https://*.mobifone-aff.vn https://137.59.47.127:9989",
-          },
-          {
-            key: "Access-Control-Allow-Origin",
-            value: "*",
-          },
-        ],
-      },
-    ];
   },
 };
 
