@@ -1,0 +1,912 @@
+[
+  {
+    "name": "24MFV",
+    "type": "Data",
+    "price": 6000000,
+    "duration": "720 ngày",
+    "description": "12000GB/chu kỳ + Free data Facebook, YouTube + 1 Tài khoản VieON Family...",
+    "commission": 1022727,
+    "affiliateUrl": "https://ketnoi.mobifone.vn/en/singlemoblie?id=4272769&click_id=dgxiWtDdCSnoGhmgyKKftnGReknZZi&aff_network=MBF",
+    "ketnoiId": "4272769",
+    "status": 1,
+    "tags": [
+      "Data",
+      "Gói Tháng"
+    ],
+    "dataVolume": "12000GB",
+    "displayOrder": 12288000002
+  },
+  {
+    "name": "12MFV",
+    "type": "Data",
+    "price": 3000000,
+    "duration": "360 ngày",
+    "description": "4800GB/chu kỳ + Free data Facebook, YouTube + 1 Tài khoản VieON Family...",
+    "commission": 511364,
+    "affiliateUrl": "https://ketnoi.mobifone.vn/en/singlemoblie?id=4272768&click_id=jMLIUliPnrpqjdpJQWEhZwSFgVkscX&aff_network=MBF",
+    "ketnoiId": "4272768",
+    "status": 1,
+    "tags": [
+      "Dài Kỳ",
+      "Data",
+      "Gói Tháng"
+    ],
+    "dataVolume": "4800GB",
+    "displayOrder": 4915200003
+  },
+  {
+    "name": "12BIGME",
+    "type": "Data",
+    "price": 1500000,
+    "duration": "360 ngày",
+    "description": "2520GB/chu kỳ",
+    "commission": 255682,
+    "affiliateUrl": "https://ketnoi.mobifone.vn/en/singlemoblie?id=4130982&click_id=kLWIYcnRHNWNBoEANziTSfvavzkZkz&aff_network=MBF",
+    "ketnoiId": "4130982",
+    "status": 1,
+    "tags": [
+      "Dài Kỳ",
+      "Data",
+      "Gói Tháng"
+    ],
+    "dataVolume": "2520GB",
+    "displayOrder": 2580480003
+  },
+  {
+    "name": "12ME159",
+    "type": "Data",
+    "price": 1908000,
+    "duration": "360 ngày",
+    "description": "2160GB/chu kỳ + Free data TikTok, YouTube, Facebook+ 1 Tài khoản học tiếng Anh trên mobienglish.vn",
+    "commission": 325227,
+    "affiliateUrl": "https://ketnoi.mobifone.vn/en/singlemoblie?id=4324237&click_id=lmHXJKowPlLoXgnJufkNkYdBCDmfzR&aff_network=MBF",
+    "ketnoiId": "4324237",
+    "status": 1,
+    "tags": [
+      "Dài Kỳ",
+      "Data",
+      "Gói Tháng"
+    ],
+    "dataVolume": "2160GB",
+    "displayOrder": 2211840003
+  },
+  {
+    "name": "6MFV",
+    "type": "Data",
+    "price": 1500000,
+    "duration": "180 ngày",
+    "description": "2100GB/chu kỳ + Free data Facebook, YouTube + 1 Tài khoản VieON Family...",
+    "commission": 255682,
+    "affiliateUrl": "https://ketnoi.mobifone.vn/en/singlemoblie?id=4272767&click_id=tfWGOGKVFpofifVQPvREPFZGwfaeSt&aff_network=MBF",
+    "ketnoiId": "4272767",
+    "status": 1,
+    "tags": [
+      "Dài Kỳ",
+      "Data",
+      "Gói Tháng"
+    ],
+    "dataVolume": "2100GB",
+    "displayOrder": 2150400006
+  },
+  {
+    "name": "6BIGME",
+    "type": "Data",
+    "price": 750000,
+    "duration": "180 ngày",
+    "description": "1260GB/chu kỳ",
+    "commission": 127841,
+    "affiliateUrl": "https://ketnoi.mobifone.vn/en/singlemoblie?id=4130979&click_id=CtIbAZXacqpvgKtRNoqhxfyaOFvzle&aff_network=MBF",
+    "ketnoiId": "4130979",
+    "status": 1,
+    "tags": [
+      "Dài Kỳ",
+      "Data",
+      "Gói Tháng"
+    ],
+    "dataVolume": "1260GB",
+    "displayOrder": 1290240007
+  },
+  {
+    "name": "15NH",
+    "type": "Thoại SMS Data",
+    "price": 100000,
+    "duration": "15 ngày",
+    "description": "120GB/15 ngày + 75 phút ngoại mạng+ Free gọi nội mạng dưới 10+ 1 Tài khoản VIP nhaccuatui",
+    "commission": 17045,
+    "affiliateUrl": "https://ketnoi.mobifone.vn/en/singlemoblie?id=3844042&click_id=KZcJeBRTnnOYYlPNjENMuuDxqZHmhf&aff_network=MBF",
+    "ketnoiId": "3844042",
+    "status": 1,
+    "tags": [
+      "Thoại SMS Data",
+      "Gói Ngày"
+    ],
+    "dataVolume": "120GB",
+    "displayOrder": 122880077
+  },
+  {
+    "name": "15ED",
+    "type": "Thoại SMS",
+    "price": 100000,
+    "duration": "15 ngày",
+    "description": "120GB/15 ngày +75 phút ngoại mạng + Free SMS nội mạng + 1 Tài khoản TOEIC nâng cao",
+    "commission": 17045,
+    "affiliateUrl": "https://ketnoi.mobifone.vn/en/singlemoblie?id=3844001&click_id=HTCdZEZFoLrLGshBipDdnjJgZvzgIE&aff_network=MBF",
+    "ketnoiId": "3844001",
+    "status": 1,
+    "tags": [
+      "Thoại SMS",
+      "Gói Ngày"
+    ],
+    "dataVolume": "120GB",
+    "displayOrder": 122880077
+  },
+  {
+    "name": "V70",
+    "type": "Thoại SMS Data",
+    "price": 70000,
+    "duration": "7 ngày",
+    "description": "56GB/7 ngày + Free gọi nội mạng dưới 10 phút + 35 phút ngoại mạng + 1 Tài khoản VieON Family...",
+    "commission": 11932,
+    "affiliateUrl": "https://ketnoi.mobifone.vn/en/singlemoblie?id=4213065&click_id=GCjFKoTfDPXArqtvrdEzbltWWOZDtR&aff_network=MBF",
+    "ketnoiId": "4213065",
+    "status": 1,
+    "tags": [
+      "Thoại SMS Data",
+      "Gói Ngày"
+    ],
+    "dataVolume": "56GB",
+    "displayOrder": 57344157
+  },
+  {
+    "name": "7NH",
+    "type": "Thoại SMS Data",
+    "price": 70000,
+    "duration": "7 ngày",
+    "description": "56GB/7 ngày + 35 phút ngoại mạng + Free gọi nội mạng dưới 10+ 1 Tài khoản VIP nhaccuatui",
+    "commission": 11932,
+    "affiliateUrl": "https://ketnoi.mobifone.vn/en/singlemoblie?id=3844041&click_id=vQeqGJAsHtxKeKJwPwiegjSRwPFgXh&aff_network=MBF",
+    "ketnoiId": "3844041",
+    "status": 1,
+    "tags": [
+      "Thoại SMS Data",
+      "Gói Ngày"
+    ],
+    "dataVolume": "56GB",
+    "displayOrder": 57344157
+  },
+  {
+    "name": "7CD",
+    "type": "Thoại SMS Data",
+    "price": 70000,
+    "duration": "7 ngày",
+    "description": "56GB/7 ngày  + 35 phút ngoại mạng + Free SMS nội mạng + 1 Tài khoản ClipTV",
+    "commission": 11932,
+    "affiliateUrl": "https://ketnoi.mobifone.vn/en/singlemoblie?id=3844023&click_id=UMyukmsOxwyVUfAEqrFYqDpoPyTJbA&aff_network=MBF",
+    "ketnoiId": "3844023",
+    "status": 1,
+    "tags": [
+      "Thoại SMS Data",
+      "Gói Ngày"
+    ],
+    "dataVolume": "56GB",
+    "displayOrder": 57344157
+  },
+  {
+    "name": "7ED",
+    "type": "Thoại SMS Data",
+    "price": 70000,
+    "duration": "7 ngày",
+    "description": "56GB/7 ngày + 35 phút ngoại mạng + Free SMS nội mạng + 1 Tài khoản TOEIC nâng cao",
+    "commission": 11932,
+    "affiliateUrl": "https://ketnoi.mobifone.vn/en/singlemoblie?id=3844000&click_id=nAGGHMiNcMtFPDDJnXzuHrIChZEgqO&aff_network=MBF",
+    "ketnoiId": "3844000",
+    "status": 1,
+    "tags": [
+      "Thoại SMS Data",
+      "Gói Ngày"
+    ],
+    "dataVolume": "56GB",
+    "displayOrder": 57344157
+  },
+  {
+    "name": "GK",
+    "type": "Data",
+    "price": 200000,
+    "duration": "10 ngày",
+    "description": "-&nbsp;Miễn phí 10GB data tốc độ cao sử dụng trong 10 ngày (kể từ thời điểm đăng ký tính theo giờ Việt Nam) - Phạm vi áp dụng: Hàn Quốc&nbsp;",
+    "commission": 27273,
+    "affiliateUrl": "https://ketnoi.mobifone.vn/en/singlemoblie?id=4625060&click_id=XGVlEfYrqXpYCzdtPNgmTrVmHUCnoE&aff_network=MBF",
+    "ketnoiId": "4625060",
+    "status": 1,
+    "tags": [
+      "Data",
+      "Gói Ngày",
+      "Roaming"
+    ],
+    "dataVolume": "10GB",
+    "displayOrder": 10240105
+  },
+  {
+    "name": "GMA",
+    "type": "Data",
+    "price": 250000,
+    "duration": "15 ngày",
+    "description": "-&nbsp;Miễn phí 10GB data tốc độ cao sử dụng trong 15 ngày (kể từ thời điểm đăng ký tính theo giờ Việt Nam) - Phạm vi áp dụng: Malaysia",
+    "commission": 0,
+    "affiliateUrl": "https://ketnoi.mobifone.vn/en/singlemoblie?id=4827067&click_id=eliqHXkcaIJRwcHjtZFIhtgkUexvJg&aff_network=MBF",
+    "ketnoiId": "4827067",
+    "status": 0,
+    "tags": [
+      "Data",
+      "Gói Ngày",
+      "Roaming"
+    ],
+    "dataVolume": "10GB",
+    "displayOrder": 10240071
+  },
+  {
+    "name": "GC",
+    "type": "Data",
+    "price": 500000,
+    "duration": "10 ngày",
+    "description": "- Miễn phí 05GB data tốc độ cao sử dụng trong 10 ngày (kể từ thời điểm đăng ký tính theo giờ Việt Nam) - Phạm vi áp dụng: Trung Quốc",
+    "commission": 34091,
+    "affiliateUrl": "https://ketnoi.mobifone.vn/en/singlemoblie?id=4819501&click_id=DAwqOGTyWYqEMkvguZCyxLUnJeWvVm&aff_network=MBF",
+    "ketnoiId": "4819501",
+    "status": 1,
+    "tags": [
+      "Data",
+      "Gói Ngày",
+      "Roaming"
+    ],
+    "dataVolume": "05GB",
+    "displayOrder": 5120102
+  },
+  {
+    "name": "GJ",
+    "type": "Data",
+    "price": 500000,
+    "duration": "10 ngày",
+    "description": "-&nbsp;Miễn phí 05GB data tốc độ cao sử dụng trong 10 ngày (kể từ thời điểm đăng ký tính theo giờ Việt Nam) -&nbsp;Phạm vi áp dụng: Nhật Bản",
+    "commission": 34091,
+    "affiliateUrl": "https://ketnoi.mobifone.vn/en/singlemoblie?id=4625059&click_id=gbKeyRRKnWKHbqrBXnRUqjGzeJHXhY&aff_network=MBF",
+    "ketnoiId": "4625059",
+    "status": 1,
+    "tags": [
+      "Data",
+      "Gói Ngày",
+      "Roaming"
+    ],
+    "dataVolume": "05GB",
+    "displayOrder": 5120102
+  },
+  {
+    "name": "RH2",
+    "type": "Data",
+    "price": 500000,
+    "duration": "10 ngày",
+    "description": "2GB/10 ngày áp dụng khi chuyển vùng quốc tế tại Campuchia",
+    "commission": 68182,
+    "affiliateUrl": "https://ketnoi.mobifone.vn/en/singlemoblie?id=169982&click_id=tSDXQVphQppeKSdtnljpzhPoLKZAqt&aff_network=MBF",
+    "ketnoiId": "169982",
+    "status": 1,
+    "tags": [
+      "Data",
+      "Gói Ngày",
+      "Roaming"
+    ],
+    "dataVolume": "2GB",
+    "displayOrder": 2048102
+  },
+  {
+    "name": "24MFV250",
+    "type": "Thoại Data",
+    "price": 6000000,
+    "duration": "720 ngày",
+    "description": "6000GB/chu kỳ + 3000 phút nội mạng + 250 phút ngoại mạng + Free data Facebook, YouTube, VieOn...",
+    "commission": 1022727,
+    "affiliateUrl": "https://ketnoi.mobifone.vn/en/singlemoblie?id=4272773&click_id=OyZnWleyWHvYYTMYCbVsvkDRxPnDTl&aff_network=MBF",
+    "ketnoiId": "4272773",
+    "status": 1,
+    "tags": [
+      "Thoại Data",
+      "Gói Tháng"
+    ],
+    "dataVolume": "6000GB",
+    "displayOrder": 6144000002
+  },
+  {
+    "name": "12MFV250",
+    "type": "Thoại Data",
+    "price": 3000000,
+    "duration": "360 ngày",
+    "description": "3000GB/chu kỳ  + 2500 phút nội mạng + 250 phút ngoại mạng + Free data Facebook, YouTube, VieOn...",
+    "commission": 511364,
+    "affiliateUrl": "https://ketnoi.mobifone.vn/en/singlemoblie?id=4272772&click_id=DWmRmggCShCpMNBCNTBUlnDEspGKLR&aff_network=MBF",
+    "ketnoiId": "4272772",
+    "status": 1,
+    "tags": [
+      "Dài Kỳ",
+      "Thoại Data",
+      "Gói Tháng"
+    ],
+    "dataVolume": "3000GB",
+    "displayOrder": 3072000003
+  },
+  {
+    "name": "24MFY200",
+    "type": "Thoại Data",
+    "price": 4800000,
+    "duration": "720 ngày",
+    "description": "2400GB/chu kỳ + 12000 phút nội mạng + 6000 phút ngoại mạng + Free data truy cập Facebook, YouTube",
+    "commission": 818182,
+    "affiliateUrl": "https://ketnoi.mobifone.vn/en/singlemoblie?id=4169111&click_id=sQpMThmjUxSMJgnnvmNmMwbrYQfIWZ&aff_network=MBF",
+    "ketnoiId": "4169111",
+    "status": 1,
+    "tags": [
+      "Thoại Data",
+      "Gói Tháng"
+    ],
+    "dataVolume": "2400GB",
+    "displayOrder": 2457600002
+  },
+  {
+    "name": "12NCT155",
+    "type": "Thoại Data",
+    "price": 1860000,
+    "duration": "360 ngày",
+    "description": "1980GB/chu kỳ  + Free nội mạng dưới 10 phút + 600 phút ngoại mạng + Free data NhacCuaTui...",
+    "commission": 317045,
+    "affiliateUrl": "https://ketnoi.mobifone.vn/en/singlemoblie?id=4346544&click_id=LsaoDyXKQZStgWMOKXXxlcvDlRZnJX&aff_network=MBF",
+    "ketnoiId": "4346544",
+    "status": 1,
+    "tags": [
+      "Dài Kỳ",
+      "Thoại Data",
+      "Gói Tháng"
+    ],
+    "dataVolume": "1980GB",
+    "displayOrder": 2027520003
+  },
+  {
+    "name": "E300",
+    "type": "Trả sau Trả trước Data Thoại",
+    "price": 300000,
+    "duration": "30 ngày",
+    "description": "Miễn phí 15GB data tốc độ cao/ngày truy cập internet (450GB/360 ngày). Hết dung lượng gói, hệ thống ngắt kết nối internet.",
+    "commission": 51137,
+    "affiliateUrl": "https://ketnoi.mobifone.vn/en/singlemoblie?id=4815390&click_id=YvLdnFCZezZhSllMfoJnEsJZsKYYwm&aff_network=MBF",
+    "ketnoiId": "4815390",
+    "status": 1,
+    "tags": [
+      "Trả sau Trả trước Data Thoại",
+      "Gói Tháng"
+    ],
+    "dataVolume": "15GB",
+    "displayOrder": 15360037
+  },
+  {
+    "name": "FM",
+    "type": "Thoại SMS Data",
+    "price": 180000,
+    "duration": "30 ngày",
+    "description": "240GB/chu kỳ + Free SMS nội mạng + 150 phút ngoại mạng + Free data xem phim.mobion.vn",
+    "commission": 0,
+    "affiliateUrl": "https://ketnoi.mobifone.vn/en/singlemoblie?id=4092279&click_id=skkgfjlzQlsRTcQxDnUccmIGaCONBR&aff_network=MBF",
+    "ketnoiId": "4092279",
+    "status": 0,
+    "tags": [
+      "Thoại SMS Data",
+      "Gói Tháng",
+      "Gói Hot"
+    ],
+    "dataVolume": "240GB",
+    "displayOrder": 245760039
+  },
+  {
+    "name": "NCT155",
+    "type": "Data Thoại",
+    "price": 155000,
+    "duration": "30 ngày",
+    "description": "165GB/chu kỳ  + Free nội mạng dưới 10 phút + 50 phút ngoại mạng + Free data NhacCuaTui...",
+    "commission": 26420,
+    "affiliateUrl": "https://ketnoi.mobifone.vn/en/singlemoblie?id=4346539&click_id=iWuFOjWrSNPUtQFrkeGVdtdEDpsqrt&aff_network=MBF",
+    "ketnoiId": "4346539",
+    "status": 1,
+    "tags": [
+      "Data Thoại",
+      "Gói Tháng",
+      "Gói Hot"
+    ],
+    "dataVolume": "165GB",
+    "displayOrder": 168960040
+  },
+  {
+    "name": "ED70",
+    "type": "Data",
+    "price": 70000,
+    "duration": "30 ngày",
+    "description": "30GB/chu kỳ + 1 Tài khoản mobiEdu",
+    "commission": 11932,
+    "affiliateUrl": "https://ketnoi.mobifone.vn/en/singlemoblie?id=4179147&click_id=UJjcyPtsFuhuWCHXVtASAvEESjhlIY&aff_network=MBF",
+    "ketnoiId": "4179147",
+    "status": 1,
+    "tags": [
+      "Data",
+      "Gói Tháng",
+      "Gói Hot"
+    ],
+    "dataVolume": "30GB",
+    "displayOrder": 30720048
+  },
+  {
+    "name": "NCT85",
+    "type": "Data",
+    "price": 85000,
+    "duration": "30 ngày",
+    "description": "30GB/chu kỳ + Free data truy cập Nhaccuatui + 1 Tài khoản VIP Nhaccuatui",
+    "commission": 14489,
+    "affiliateUrl": "https://ketnoi.mobifone.vn/en/singlemoblie?id=4025284&click_id=DMuWOXlBoXCJoDtIZWbZAfxiSYeknZ&aff_network=MBF",
+    "ketnoiId": "4025284",
+    "status": 1,
+    "tags": [
+      "Data",
+      "Gói Tháng",
+      "Gói Hot"
+    ],
+    "dataVolume": "30GB",
+    "displayOrder": 30720045
+  },
+  {
+    "name": "AG90",
+    "type": "Data",
+    "price": 90000,
+    "duration": "30 ngày",
+    "description": "30GB/chu kỳ + 1 Tài khoản mobiAgri",
+    "commission": 15341,
+    "affiliateUrl": "https://ketnoi.mobifone.vn/en/singlemoblie?id=4025281&click_id=IzNqFWupaOWtDdYFpsLOtbpdPLFnwR&aff_network=MBF",
+    "ketnoiId": "4025281",
+    "status": 1,
+    "tags": [
+      "Data",
+      "Gói Tháng",
+      "Gói Hot"
+    ],
+    "dataVolume": "30GB",
+    "displayOrder": 30720044
+  },
+  {
+    "name": "NCT100",
+    "type": "Thoại Data",
+    "price": 100000,
+    "duration": "30 ngày",
+    "description": "30GB/chu kỳ + Free nội mạng dưới 10+ 30 phút ngoại mạng + Tài khoản NhacCuaTui...",
+    "commission": 17045,
+    "affiliateUrl": "https://ketnoi.mobifone.vn/en/singlemoblie?id=4260092&click_id=YglOlYEVpwXOiXRsxIkQBpOCfDKhjd&aff_network=MBF",
+    "ketnoiId": "4260092",
+    "status": 1,
+    "tags": [
+      "Thoại Data",
+      "Gói Tháng",
+      "Gói Hot"
+    ],
+    "dataVolume": "30GB",
+    "displayOrder": 30720043
+  },
+  {
+    "name": "GLX179",
+    "type": "Thoại",
+    "price": 178998,
+    "duration": "30 ngày",
+    "description": "Miễn cước data truy cập ứng dụng Galaxy Play",
+    "commission": 30512,
+    "affiliateUrl": "https://ketnoi.mobifone.vn/en/singlemoblie?id=4571167&click_id=rMUfnRSLKVQmdnIHCVZBrZuNJtGFBb&aff_network=MBF",
+    "ketnoiId": "4571167",
+    "status": 1,
+    "tags": [
+      "Thoại",
+      "Gói Tháng"
+    ],
+    "displayOrder": 39
+  },
+  {
+    "name": "12CD70",
+    "type": "Thoại",
+    "price": 840000,
+    "duration": "360 ngày",
+    "description": "Miễn phí các cuộc gọi nội mạng dưới 10 phút (tối đa 1.000 phút/tháng)",
+    "commission": 143182,
+    "affiliateUrl": "https://ketnoi.mobifone.vn/en/singlemoblie?id=4702699&click_id=EGPjjBygDyRwobkvDfhQhdjlzHAJOl&aff_network=MBF",
+    "ketnoiId": "4702699",
+    "status": 1,
+    "tags": [
+      "Dài Kỳ",
+      "Thoại",
+      "Gói Tháng"
+    ],
+    "displayOrder": 4
+  },
+  {
+    "name": "6MFV250",
+    "type": "Thoại Data",
+    "price": 1500000,
+    "duration": "180 ngày",
+    "description": "1500GB/chu kỳ  + 2000 phút nội mạng + 250 phút ngoại mạng + Free data Facebook, YouTube, VieOn...",
+    "commission": 255682,
+    "affiliateUrl": "https://ketnoi.mobifone.vn/en/singlemoblie?id=4272771&click_id=xKdSwUAqLBFmeJRZQiWSOBibaTbnie&aff_network=MBF",
+    "ketnoiId": "4272771",
+    "status": 1,
+    "tags": [
+      "Dài Kỳ",
+      "Thoại Data",
+      "Gói Tháng"
+    ],
+    "dataVolume": "1500GB",
+    "displayOrder": 1536000006
+  },
+  {
+    "name": "12MFY200",
+    "type": "Thoại Data",
+    "price": 2400000,
+    "duration": "360 ngày",
+    "description": "1500GB/chu kỳ + 6000 phút nội mạng + 3000 phút ngoại mạng + Free data truy cập Facebook, YouTube",
+    "commission": 409091,
+    "affiliateUrl": "https://ketnoi.mobifone.vn/en/singlemoblie?id=4169109&click_id=GkmsxnAjpFUxpmdhdUAhrdFmDLGNQo&aff_network=MBF",
+    "ketnoiId": "4169109",
+    "status": 1,
+    "tags": [
+      "Dài Kỳ",
+      "Thoại Data",
+      "Gói Tháng"
+    ],
+    "dataVolume": "1500GB",
+    "displayOrder": 1536000003
+  },
+  {
+    "name": "ME90",
+    "type": "Data Thoại",
+    "price": 90000,
+    "duration": "30 ngày",
+    "description": "30GB/chu kỳ + 30 phút ngoại mạng + Free nội mạng dưới 10",
+    "commission": 15341,
+    "affiliateUrl": "https://ketnoi.mobifone.vn/en/singlemoblie?id=4025061&click_id=kJaKOLdJFHqJJexxSQktKOShlpViPB&aff_network=MBF",
+    "ketnoiId": "4025061",
+    "status": 1,
+    "tags": [
+      "Data Thoại",
+      "Gói Tháng"
+    ],
+    "dataVolume": "30GB",
+    "displayOrder": 30720044
+  },
+  {
+    "name": "NCT130",
+    "type": "Data Thoại",
+    "price": 130000,
+    "duration": "30 ngày",
+    "description": "30GB/chu kỳ  + 30 phút ngoại mạng + Free nội mạng dưới 10+ Free data TikTok, YouTube, Facebook...",
+    "commission": 22159,
+    "affiliateUrl": "https://ketnoi.mobifone.vn/en/singlemoblie?id=4277336&click_id=TMWHHFcaUXlnQDVKhVdRWhpDYnUGna&aff_network=MBF",
+    "ketnoiId": "4277336",
+    "status": 1,
+    "tags": [
+      "Data Thoại",
+      "Gói Tháng",
+      "Gói Hot"
+    ],
+    "dataVolume": "30GB",
+    "displayOrder": 30720041
+  },
+  {
+    "name": "12AG155",
+    "type": "Data Thoại",
+    "price": 1860000,
+    "duration": "360 ngày",
+    "description": "Miễn phí 7GB data tốc độ cao/ngày (2520GB/360 ngày). Hết dung lượng gói, hệ thống ngắt kết nối Internet.",
+    "commission": 317045,
+    "affiliateUrl": "https://ketnoi.mobifone.vn/en/singlemoblie?id=4672228&click_id=nLlobrurhcrMRdpKmiLbdidxzAKRjg&aff_network=MBF",
+    "ketnoiId": "4672228",
+    "status": 1,
+    "tags": [
+      "Dài Kỳ",
+      "Data Thoại",
+      "Gói Tháng"
+    ],
+    "dataVolume": "7GB",
+    "displayOrder": 7168003
+  },
+  {
+    "name": "VG159",
+    "type": "Data Thoại",
+    "price": 159000,
+    "duration": "30 ngày",
+    "description": "Miễn phí 6GB data tốc độ cao/ngày (180GB/30 ngày). Hết dung lượng gói, hệ thống ngắt kết nối Internet",
+    "commission": 27102,
+    "affiliateUrl": "https://ketnoi.mobifone.vn/en/singlemoblie?id=4675913&click_id=jiRxuzJfRfkOxGjaKOKaQpDBodlUQJ&aff_network=MBF",
+    "ketnoiId": "4675913",
+    "status": 1,
+    "tags": [
+      "Data Thoại",
+      "Gói Tháng"
+    ],
+    "dataVolume": "6GB",
+    "displayOrder": 6144040
+  },
+  {
+    "name": "12KC",
+    "type": "Data Trả trước",
+    "price": 1428000,
+    "duration": "360 ngày",
+    "description": "360GB/chu kỳ  + 5 kênh K+ + Free data truy cập ClipTV...",
+    "commission": 243409,
+    "affiliateUrl": "https://ketnoi.mobifone.vn/en/singlemoblie?id=4335398&click_id=AADfqLLynRkGwIdRTGJGynVZSQOuYA&aff_network=MBF",
+    "ketnoiId": "4335398",
+    "status": 1,
+    "tags": [
+      "Dài Kỳ",
+      "Data Trả trước",
+      "Gói Tháng"
+    ],
+    "dataVolume": "360GB",
+    "displayOrder": 368640003
+  },
+  {
+    "name": "KC",
+    "type": "Trả trước Data",
+    "price": 119000,
+    "duration": "30 ngày",
+    "description": "30GB/chu kỳ  + 5 kênh K+ + Free data ClipTV...",
+    "commission": 20284,
+    "affiliateUrl": "https://ketnoi.mobifone.vn/en/singlemoblie?id=4281798&click_id=esCNFTPZhVdHNHLXHxOWsKkyBgXpbZ&aff_network=MBF",
+    "ketnoiId": "4281798",
+    "status": 1,
+    "tags": [
+      "Trả trước Data",
+      "Gói Tháng"
+    ],
+    "dataVolume": "30GB",
+    "displayOrder": 30720042
+  },
+  {
+    "name": "3BM",
+    "type": "Thoại SMS Data",
+    "price": 540000,
+    "duration": "90 ngày",
+    "description": "720GB/chu kỳ + 450 phút ngoại mạng+ Free gọi nội mạng + Free data mobiAgri",
+    "commission": 92045,
+    "affiliateUrl": "https://ketnoi.mobifone.vn/en/singlemoblie?id=3844063&click_id=ZAHKSlImFmTPXrBXGpMKVkFvZoxdON&aff_network=MBF",
+    "ketnoiId": "3844063",
+    "status": 1,
+    "tags": [
+      "Dài Kỳ",
+      "Thoại SMS Data",
+      "Gói Tháng"
+    ],
+    "dataVolume": "720GB",
+    "displayOrder": 737280013
+  },
+  {
+    "name": "3CM",
+    "type": "Thoại SMS Data",
+    "price": 540000,
+    "duration": "90 ngày",
+    "description": "720GB/chu kỳ +  500 phút ngoại mạng + Free SMS nội mạng + 1 Tài khoản ClipTV",
+    "commission": 92045,
+    "affiliateUrl": "https://ketnoi.mobifone.vn/en/singlemoblie?id=3844027&click_id=VieIXKYIAcrUQiydKSJgEfCvcAMslQ&aff_network=MBF",
+    "ketnoiId": "3844027",
+    "status": 1,
+    "tags": [
+      "Dài Kỳ",
+      "Thoại SMS Data",
+      "Gói Tháng"
+    ],
+    "dataVolume": "720GB",
+    "displayOrder": 737280013
+  },
+  {
+    "name": "3EM",
+    "type": "Thoại SMS Data",
+    "price": 540000,
+    "duration": "90 ngày",
+    "description": "720GB/chu kỳ  + Free nội mạng dưới 10+ 450 phút ngoại mạng+ Free học tiếng Anh trên mobiEdu...",
+    "commission": 92045,
+    "affiliateUrl": "https://ketnoi.mobifone.vn/en/singlemoblie?id=3844005&click_id=NQWYzemRIgANNksFAXCtaKUWelNsOn&aff_network=MBF",
+    "ketnoiId": "3844005",
+    "status": 1,
+    "tags": [
+      "Dài Kỳ",
+      "Thoại SMS Data",
+      "Gói Tháng"
+    ],
+    "dataVolume": "720GB",
+    "displayOrder": 737280013
+  },
+  {
+    "name": "V180",
+    "type": "Thoại SMS Data",
+    "price": 180000,
+    "duration": "30 ngày",
+    "description": "240GB/chu kỳ + Free gọi nội mạng + Free SMS nội mạng + 150 phút ngoại mạng...",
+    "commission": 30682,
+    "affiliateUrl": "https://ketnoi.mobifone.vn/en/singlemoblie?id=4093931&click_id=DkxvBlGemadxpGpCgwLlKMukyYUdCB&aff_network=MBF",
+    "ketnoiId": "4093931",
+    "status": 1,
+    "tags": [
+      "Thoại SMS Data",
+      "Gói Tháng"
+    ],
+    "dataVolume": "240GB",
+    "displayOrder": 245760039
+  },
+  {
+    "name": "BM",
+    "type": "Thoại SMS Data",
+    "price": 180000,
+    "duration": "30 ngày",
+    "description": "240GB/chu kỳ + 150 phút ngoại mạng+ Free gọi nội mạng + Free data mobiAgri",
+    "commission": 30682,
+    "affiliateUrl": "https://ketnoi.mobifone.vn/en/singlemoblie?id=3844060&click_id=jAlNrIiDgmGWTXvVSTdICZuCbaDXwp&aff_network=MBF",
+    "ketnoiId": "3844060",
+    "status": 1,
+    "tags": [
+      "Thoại SMS Data",
+      "Gói Tháng"
+    ],
+    "dataVolume": "240GB",
+    "displayOrder": 245760039
+  },
+  {
+    "name": "3NH",
+    "type": "Data Thoại SMS",
+    "price": 30000,
+    "duration": "3 ngày",
+    "description": "24GB/3 ngày + 15 phút ngoại mạng + Free gọi nội mạng dưới 10+ 1 Tài khoản VIP nhaccuatui",
+    "commission": 5114,
+    "affiliateUrl": "https://ketnoi.mobifone.vn/en/singlemoblie?id=3844038&click_id=djJlNsHgwvHTcOQkiJTDLsnGrkYZxe&aff_network=MBF",
+    "ketnoiId": "3844038",
+    "status": 1,
+    "tags": [
+      "Data Thoại SMS",
+      "Gói Ngày"
+    ],
+    "dataVolume": "24GB",
+    "displayOrder": 24576367
+  },
+  {
+    "name": "BD",
+    "type": "Data Thoại SMS",
+    "price": 10000,
+    "duration": "1 ngày",
+    "description": "8GB/ngày + 5 phút ngoại mạng+ Free gọi nội mạng + Free data mobiAgri",
+    "commission": 1705,
+    "affiliateUrl": "https://ketnoi.mobifone.vn/en/singlemoblie?id=3844053&click_id=jPPVnBqcSuRNwOZoLgFJVVnDnlJTeh&aff_network=MBF",
+    "ketnoiId": "3844053",
+    "status": 1,
+    "tags": [
+      "Data Thoại SMS",
+      "Gói Ngày"
+    ],
+    "dataVolume": "8GB",
+    "displayOrder": 8193100
+  },
+  {
+    "name": "ED",
+    "type": "Data Thoại SMS",
+    "price": 10000,
+    "duration": "1 ngày",
+    "description": "8GB/ngày + 5 phút gọi ngoại mạng + Free SMS nội mạng + 1 Tài khoản TOEIC nâng cao",
+    "commission": 1705,
+    "affiliateUrl": "https://ketnoi.mobifone.vn/en/singlemoblie?id=3843998&click_id=bvfbYRMhLGpjtGFnuJvaSRNTEfsqBp&aff_network=MBF",
+    "ketnoiId": "3843998",
+    "status": 1,
+    "tags": [
+      "Data Thoại SMS",
+      "Gói Ngày"
+    ],
+    "dataVolume": "8GB",
+    "displayOrder": 8193100
+  },
+  {
+    "name": "3NC",
+    "type": "Thoại Data SMS",
+    "price": 540000,
+    "duration": "90 ngày",
+    "description": "720GB/chu kỳ + 450 phút ngoại mạng+ Free gọi nội mạng dưới 10+ 1 Tài khoản VIP nhaccuatui",
+    "commission": 92045,
+    "affiliateUrl": "https://ketnoi.mobifone.vn/en/singlemoblie?id=3844044&click_id=eEvwJKEERnvzfVtFZWPiAfEySenTHA&aff_network=MBF",
+    "ketnoiId": "3844044",
+    "status": 1,
+    "tags": [
+      "Dài Kỳ",
+      "Thoại Data SMS",
+      "Gói Tháng"
+    ],
+    "dataVolume": "720GB",
+    "displayOrder": 737280013
+  },
+  {
+    "name": "RSD",
+    "type": "Data Roaming Thoại",
+    "price": 500000,
+    "duration": "10 ngày",
+    "description": "10GB/10 ngày + Ưu đãi gọi, nhắn tin về Việt Nam...",
+    "commission": 68182,
+    "affiliateUrl": "https://ketnoi.mobifone.vn/en/singlemoblie?id=170005&click_id=pkPBglhovVSqaslPUDhfJUVFDmMyTx&aff_network=MBF",
+    "ketnoiId": "170005",
+    "status": 1,
+    "tags": [
+      "Data Roaming Thoại",
+      "Gói Ngày"
+    ],
+    "dataVolume": "10GB",
+    "displayOrder": 10240102
+  },
+  {
+    "name": "RH",
+    "type": "Roaming Data",
+    "price": 100000,
+    "duration": "7 Ngày",
+    "description": "200MB/7 ngày truy cập internet trên 15 nước",
+    "commission": 13637,
+    "affiliateUrl": "https://ketnoi.mobifone.vn/en/singlemoblie?id=5681&click_id=npTEKjeISwBJDPoasXlykmKyHwzKka&aff_network=MBF",
+    "ketnoiId": "5681",
+    "status": 1,
+    "tags": [
+      "Roaming Data",
+      "Gói Ngày"
+    ],
+    "dataVolume": "200MB",
+    "displayOrder": 200153
+  },
+  {
+    "name": "RC2",
+    "type": "Thoại SMS Data Roaming",
+    "price": 500000,
+    "duration": "15 Ngày",
+    "description": "1,5GB/7 ngày + 20 SMS + 20 phút gọi + 20 phút nhận",
+    "commission": 68182,
+    "affiliateUrl": "https://ketnoi.mobifone.vn/en/singlemoblie?id=5058&click_id=SHbTzlShRuiomnjbqGnRhxDQtgtFyg&aff_network=MBF",
+    "ketnoiId": "5058",
+    "status": 1,
+    "tags": [
+      "Thoại SMS Data Roaming",
+      "Gói Ngày"
+    ],
+    "dataVolume": "5GB",
+    "displayOrder": 5120069
+  },
+  {
+    "name": "RC3",
+    "type": "Thoại SMS Data Roaming",
+    "price": 1000000,
+    "duration": "30 Ngày",
+    "description": "3,5GB/7 ngày + 30 SMS + 30 phút gọi + 30 phút nhận",
+    "commission": 136364,
+    "affiliateUrl": "https://ketnoi.mobifone.vn/en/singlemoblie?id=5059&click_id=AyIlioUqbjjtiSqSJSWwYqOVHnknWH&aff_network=MBF",
+    "ketnoiId": "5059",
+    "status": 1,
+    "tags": [
+      "Thoại SMS Data Roaming",
+      "Gói Tháng"
+    ],
+    "dataVolume": "5GB",
+    "displayOrder": 5120034
+  },
+  {
+    "name": "RC1",
+    "type": "Thoại SMS Data Roaming",
+    "price": 250000,
+    "duration": "7 Ngày",
+    "description": "500 MB/7 ngày + 10 SMS + 10 phút gọi + 10 phút nhận",
+    "commission": 34091,
+    "affiliateUrl": "https://ketnoi.mobifone.vn/en/singlemoblie?id=5057&click_id=QdIwGYcksGkimvrPVCgjdNPvDdrudD&aff_network=MBF",
+    "ketnoiId": "5057",
+    "status": 1,
+    "tags": [
+      "Thoại SMS Data Roaming",
+      "Gói Ngày"
+    ],
+    "dataVolume": "500MB",
+    "displayOrder": 500147
+  }
+]
