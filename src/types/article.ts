@@ -165,6 +165,7 @@ export interface ArticleSummaryFromAPI {
   slug: string;
   publishedAt: string;
   // Update cover to include formats (optional thumbnail)
+  coverUrl: string | null;
   cover: {
     id: number; // Assuming cover object has an ID if populated
     url: string;

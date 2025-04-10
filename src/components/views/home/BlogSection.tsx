@@ -6,6 +6,11 @@ import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 
+// LocalStorage keys
+const CACHE_KEY_POSTS = "homepagePostsCache";
+const CACHE_KEY_IDS = "homepagePostsIdsCache";
+const POST_ID_COUNT_FOR_CACHE_CHECK = 3; // How many initial post IDs to compare
+
 export default function BlogSection() {
   const blogParticleId = "blog-particles-js";
   const [blogPosts, setBlogPosts] = useState<ArticleSummaryFromAPI[]>([]);
@@ -14,26 +19,85 @@ export default function BlogSection() {
 
   useEffect(() => {
     async function loadBlogPosts() {
-      setIsLoading(true);
+      setIsLoading(true); // Start loading initially
       setError(null);
+
+      let cachedPosts: ArticleSummaryFromAPI[] | null = null;
+      let cachedIds: number[] | null = null;
+
+      // 1. Try loading from cache first
       try {
+        const cachedPostsData = localStorage.getItem(CACHE_KEY_POSTS);
+        const cachedIdsData = localStorage.getItem(CACHE_KEY_IDS);
+        if (cachedPostsData) {
+          cachedPosts = JSON.parse(cachedPostsData);
+          if (Array.isArray(cachedPosts) && cachedPosts.length > 0) {
+            console.log("Using cached homepage posts initially.");
+            setBlogPosts(cachedPosts);
+            setIsLoading(false); // Show cached data immediately
+          } else {
+            cachedPosts = null; // Invalid cache data
+          }
+        }
+        if (cachedIdsData) {
+          cachedIds = JSON.parse(cachedIdsData);
+          if (!Array.isArray(cachedIds)) {
+            cachedIds = null; // Invalid cache data
+          }
+        }
+      } catch (e) {
+        console.warn("Failed to read or parse homepage cache:", e);
+        localStorage.removeItem(CACHE_KEY_POSTS);
+        localStorage.removeItem(CACHE_KEY_IDS);
+      }
+
+      // 2. Fetch fresh data from API
+      try {
+        setIsLoading(true); // Set loading true again while fetching in background
         const response = await fetch("/api/homepage-posts");
         if (!response.ok) {
           throw new Error(`API fetch failed with status ${response.status}`);
         }
         const data = await response.json();
-        setBlogPosts(data.posts || []);
+        const newPosts: ArticleSummaryFromAPI[] = data.posts || [];
+
+        // 3. Compare IDs and update if necessary
+        const newIds = newPosts.slice(0, POST_ID_COUNT_FOR_CACHE_CHECK).map((p) => p.id);
+
+        // Simple array comparison (order matters)
+        const idsMatch = cachedIds && JSON.stringify(newIds) === JSON.stringify(cachedIds);
+
+        if (!idsMatch) {
+          console.log("Homepage posts changed or cache empty. Updating.");
+          setBlogPosts(newPosts);
+          // Update cache
+          try {
+            localStorage.setItem(CACHE_KEY_POSTS, JSON.stringify(newPosts));
+            localStorage.setItem(CACHE_KEY_IDS, JSON.stringify(newIds));
+          } catch (e) {
+            console.warn("Failed to write to homepage cache:", e);
+          }
+        } else {
+          console.log("Homepage posts cache is up-to-date.");
+          // Ensure state reflects cache if it wasn't set initially
+          if (cachedPosts && blogPosts !== cachedPosts) {
+            setBlogPosts(cachedPosts);
+          }
+        }
       } catch (err) {
         console.error("Failed to fetch homepage blog posts from API route:", err);
         setError("Could not load articles.");
-        setBlogPosts([]);
+        // Don't clear posts if cache was loaded, only if fetch fails AND cache was empty
+        if (!cachedPosts) {
+          setBlogPosts([]);
+        }
       } finally {
-        setIsLoading(false);
+        setIsLoading(false); // Final loading state update
       }
     }
 
     loadBlogPosts();
-  }, []);
+  }, []); // Empty dependency array means this runs once on mount
 
   useEffect(() => {
     if (typeof window !== "undefined" && window.particlesJS) {
@@ -101,13 +165,32 @@ export default function BlogSection() {
     };
   }, []);
 
-  const getStrapiImageUrl = (coverData: ArticleSummaryFromAPI["cover"]) => {
-    const thumbnailUrl = coverData?.formats?.thumbnail?.url;
-    const originalUrl = coverData?.url;
-    const url = thumbnailUrl || originalUrl;
-    return url
-      ? `${process.env.NEXT_PUBLIC_STRAPI_CMS_BASE_URL || ""}${url}`
-      : "/images/placeholder-image.jpg";
+  // Corrected helper function with simplified priority and base URL logic
+  const getStrapiImageUrl = (article: ArticleSummaryFromAPI | null): string => {
+    if (!article) return "/images/placeholder-image.jpg";
+
+    const strapiBaseUrl = process.env.NEXT_PUBLIC_STRAPI_CMS_BASE_URL || "";
+    let finalUrl: string | undefined | null = null;
+
+    // 1. Prioritize coverUrl (assumed absolute)
+    if (article.coverUrl) {
+      finalUrl = article.coverUrl;
+    } else {
+      // 2. Try thumbnail URL from cover object
+      const thumbnailUrl = article.cover?.formats?.thumbnail?.url;
+      if (thumbnailUrl) {
+        finalUrl = thumbnailUrl.startsWith("/") ? `${strapiBaseUrl}${thumbnailUrl}` : thumbnailUrl;
+      } else {
+        // 3. Try original URL from cover object
+        const originalUrl = article.cover?.url;
+        if (originalUrl) {
+          finalUrl = originalUrl.startsWith("/") ? `${strapiBaseUrl}${originalUrl}` : originalUrl;
+        }
+      }
+    }
+    console.log("finalUrl", article);
+    // 4. Final fallback to placeholder
+    return finalUrl || "/images/placeholder-image.jpg";
   };
 
   return (
@@ -160,7 +243,7 @@ export default function BlogSection() {
                   <Link href={`/blog/${post.slug}`} className="block">
                     <div className="relative aspect-[16/10] overflow-hidden">
                       <Image
-                        src={getStrapiImageUrl(post.cover)}
+                        src={getStrapiImageUrl(post)}
                         alt={post.title || "Blog post image"}
                         fill
                         sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"

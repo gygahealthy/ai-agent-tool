@@ -25,7 +25,7 @@ export const BlogNavigation = ({ previous, next }: BlogNavigationProps) => {
               <ArrowLeftIcon className="h-4 w-4" />
               <div>
                 <div className="text-sm text-gray-400">Previous Article</div>
-                <div className="text-lg font-semibold">{previous.title}</div>
+                <div className="text-sm font-medium text-white">{previous.title}</div>
               </div>
             </Link>
           ) : (
@@ -38,7 +38,7 @@ export const BlogNavigation = ({ previous, next }: BlogNavigationProps) => {
             >
               <div>
                 <div className="text-sm text-gray-400">Next Article</div>
-                <div className="text-lg font-semibold">{next.title}</div>
+                <div className="text-sm font-medium text-white">{next.title}</div>
               </div>
               <ArrowRightIcon className="h-4 w-4" />
             </Link>

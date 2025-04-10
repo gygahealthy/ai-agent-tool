@@ -16,7 +16,8 @@ import { BlogNavigation } from "@/components/views/blog/BlogNavigation";
 import { BlogSidebar } from "@/components/views/blog/BlogSidebar";
 import { BlogSimilarPosts } from "@/components/views/blog/BlogSimilarPosts";
 //
-import { fetchAllArticleSlugs, fetchArticleBySlug } from "@/lib/strapi/fetchAiArticles"; // Import the new slug fetcher
+import { fetchAllArticleSlugs } from "@/lib/strapi/fetchAiArticles"; // fetchAllArticleSlugs remains here
+import { fetchArticleBySlug } from "@/lib/strapi/fetchArticleDetail"; // Import from the new file
 import {
   Article, // Import the updated flat Article type
   ArticleBlock,
@@ -135,8 +136,15 @@ interface TocItem {
   level: number; // Keep track of heading level (e.g., 2 for H2)
 }
 
+// Define props type for the page component
+interface BlogPostPageProps {
+  post: Article | null;
+  previousPost: { slug: string; title: string } | null;
+  nextPost: { slug: string; title: string } | null;
+}
+
 // In the BlogPostPage component, add:
-export default function BlogPostPage({ post }: { post: Article | null }) {
+export default function BlogPostPage({ post, previousPost, nextPost }: BlogPostPageProps) {
   const router = useRouter();
   const [tableOfContents, setTableOfContents] = useState<TocItem[]>([]);
 
@@ -185,13 +193,17 @@ export default function BlogPostPage({ post }: { post: Article | null }) {
     );
   }
 
-  // Prepare props for BlogHeader using direct access on post
+  // Prepare props for BlogHeader using direct access on post and corrected image logic
   const headerProps = {
     title: post.title,
     excerpt: post.description || "",
-    imageUrl: post.cover?.url
-      ? (process.env.NEXT_PUBLIC_STRAPI_CMS_BASE_URL || "") + post.cover.url
-      : post.coverUrl || "/placeholder-image.jpg",
+    imageUrl: post.coverUrl
+      ? post.coverUrl // Prioritize coverUrl (absolute)
+      : post.cover?.url // Then cover.url (check if relative)
+        ? post.cover.url.startsWith("/")
+          ? `${process.env.NEXT_PUBLIC_STRAPI_CMS_BASE_URL || ""}${post.cover.url}`
+          : post.cover.url
+        : "/placeholder-image.jpg", // Final fallback
     authorName: post.author?.data?.attributes?.name || "Unknown Author",
     date: new Date(post.publishedAt).toLocaleDateString("en-US", {
       year: "numeric",
@@ -222,8 +234,8 @@ export default function BlogPostPage({ post }: { post: Article | null }) {
           <BlogSidebar post={post} tableOfContents={tableOfContents} />
         </div>
       </div>
-      {/* TODO: Fetch actual adjacent posts in getStaticProps */}
-      <BlogNavigation previous={null} next={null} />
+      {/* Pass fetched adjacent posts to BlogNavigation */}
+      <BlogNavigation previous={previousPost} next={nextPost} />
       {/* TODO: Fetch actual similar posts in getStaticProps */}
       <BlogSimilarPosts posts={[]} />
       <BlogCTA />
@@ -287,11 +299,57 @@ export const getStaticProps: GetStaticProps = async (context) => {
     return { notFound: true };
   }
 
-  // TODO: Fetch similar/adjacent posts based on the fetched postData (now flat)
+  // Fetch adjacent posts
+  let previousPostData = null;
+  let nextPostData = null;
+
+  if (postData?.publishedAt) {
+    const currentPublishedAt = postData.publishedAt;
+    const { fetchStrapiAPI } = await import("@/lib/strapi/client"); // Dynamically import fetchStrapiAPI
+
+    try {
+      // Fetch previous post (published before current, latest first)
+      const prevQueryParams = {
+        fields: ["title", "slug"], // Only need title and slug
+        filters: {
+          publishedAt: { $lt: currentPublishedAt }, // Less than current date
+        },
+        sort: ["publishedAt:desc"], // Get the closest one before
+        pagination: { pageSize: 1, page: 1 },
+      };
+      const prevResponse: StrapiListResponse<{ title: string; slug: string }> =
+        await fetchStrapiAPI("/articles", prevQueryParams);
+      if (prevResponse.data && prevResponse.data.length > 0) {
+        previousPostData = prevResponse.data[0];
+      }
+
+      // Fetch next post (published after current, oldest first)
+      const nextQueryParams = {
+        fields: ["title", "slug"],
+        filters: {
+          publishedAt: { $gt: currentPublishedAt }, // Greater than current date
+        },
+        sort: ["publishedAt:asc"], // Get the closest one after
+        pagination: { pageSize: 1, page: 1 },
+      };
+      const nextResponse: StrapiListResponse<{ title: string; slug: string }> =
+        await fetchStrapiAPI("/articles", nextQueryParams);
+      if (nextResponse.data && nextResponse.data.length > 0) {
+        nextPostData = nextResponse.data[0];
+      }
+    } catch (error) {
+      console.error(`Error fetching adjacent posts for ${slug}:`, error);
+      // Don't fail the build, just proceed without adjacent posts
+    }
+  }
+
+  // TODO: Fetch actual similar posts based on the fetched postData (now flat)
 
   return {
     props: {
       post: postData, // Pass the flat article object or null
+      previousPost: previousPostData,
+      nextPost: nextPostData,
     },
     // No revalidate
   };

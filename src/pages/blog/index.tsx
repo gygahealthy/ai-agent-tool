@@ -32,16 +32,32 @@ export default function BlogIndexPage({ articles }: BlogIndexPageProps) {
   const featuredPostData = safeArticles.length > 0 ? safeArticles[0] : null;
   const latestPostsData = safeArticles.slice(1);
 
-  // Helper function to get Strapi image URL, prioritizing thumbnail
-  const getStrapiImageUrl = (coverData: ArticleSummaryFromAPI["cover"]) => {
-    // Prioritize thumbnail URL if available
-    const thumbnailUrl = coverData?.formats?.thumbnail?.url;
-    const originalUrl = coverData?.url;
-    const url = thumbnailUrl || originalUrl;
+  // Corrected helper function to prioritize coverUrl -> thumbnail -> cover.url -> placeholder
+  const getStrapiImageUrl = (article: ArticleSummaryFromAPI | null): string => {
+    if (!article) return "/images/placeholder-image.jpg";
 
-    return url
-      ? `${process.env.NEXT_PUBLIC_STRAPI_CMS_BASE_URL || ""}${url}`
-      : "/images/placeholder-image.jpg"; // Fallback
+    const strapiBaseUrl = process.env.NEXT_PUBLIC_STRAPI_CMS_BASE_URL || "";
+    let finalUrl: string | undefined | null = null;
+
+    // 1. Prioritize coverUrl (assumed absolute)
+    if (article.coverUrl) {
+      finalUrl = article.coverUrl;
+    } else {
+      // 2. Try thumbnail URL from cover object
+      const thumbnailUrl = article.cover?.formats?.thumbnail?.url;
+      if (thumbnailUrl) {
+        finalUrl = thumbnailUrl.startsWith("/") ? `${strapiBaseUrl}${thumbnailUrl}` : thumbnailUrl;
+      } else {
+        // 3. Try original URL from cover object
+        const originalUrl = article.cover?.url;
+        if (originalUrl) {
+          finalUrl = originalUrl.startsWith("/") ? `${strapiBaseUrl}${originalUrl}` : originalUrl;
+        }
+      }
+    }
+
+    // 4. Final fallback to placeholder
+    return finalUrl || "/images/placeholder-image.jpg";
   };
 
   // Helper function for author name - adjust for flat structure
@@ -79,7 +95,7 @@ export default function BlogIndexPage({ articles }: BlogIndexPageProps) {
               <div className="grid gap-8 lg:grid-cols-2">
                 <div className="relative aspect-[16/9] overflow-hidden rounded-xl lg:aspect-auto lg:h-full">
                   <Image
-                    src={getStrapiImageUrl(featuredPostData.cover)} // Pass cover directly
+                    src={getStrapiImageUrl(featuredPostData)} // Pass the whole article object
                     alt={featuredPostData.title || "Featured post image"} // Access title directly
                     fill
                     className="object-cover transition-transform hover:scale-105"
@@ -145,8 +161,8 @@ export default function BlogIndexPage({ articles }: BlogIndexPageProps) {
                           slug: slug || "#",
                           title: article.title,
                           excerpt: article.description || "",
-                          // Pass the prioritized URL (thumbnail or original)
-                          imageUrl: getStrapiImageUrl(article.cover),
+                          // Pass the whole article object to get the prioritized URL
+                          imageUrl: getStrapiImageUrl(article),
                           authorName: getAuthorName(article.author),
                           date: new Date(publishedAt!).toLocaleDateString("en-US", {
                             year: "numeric",

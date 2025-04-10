@@ -1,16 +1,23 @@
 import Image from "next/image";
 
 interface BlogImageProps {
-  src: string;
+  src?: string | null;
   alt: string;
   caption?: string;
   width?: number;
   height?: number;
+  fallbackSrc?: string;
 }
 
-export const BlogImage = ({ src, alt, caption, width, height }: BlogImageProps) => {
+export const BlogImage = ({ src, alt, caption, width, height, fallbackSrc }: BlogImageProps) => {
   const strapiBaseUrl = process.env.NEXT_PUBLIC_STRAPI_CMS_BASE_URL || "";
-  const fullSrc = src.startsWith("/") ? `${strapiBaseUrl}${src}` : src;
+  let finalSrc = "/placeholder-image.jpg";
+
+  if (src) {
+    finalSrc = src.startsWith("/") ? `${strapiBaseUrl}${src}` : src;
+  } else if (fallbackSrc) {
+    finalSrc = fallbackSrc;
+  }
 
   const imageWidth = width || 800;
   const imageHeight = height || 450;
@@ -19,7 +26,7 @@ export const BlogImage = ({ src, alt, caption, width, height }: BlogImageProps) 
     <figure className="my-8">
       <div className="overflow-hidden rounded-lg shadow-[0_8px_30px_rgb(0,0,0,0.12)] transition-all hover:shadow-[0_8px_30px_rgb(0,0,0,0.24)]">
         <Image
-          src={fullSrc}
+          src={finalSrc}
           alt={alt}
           width={imageWidth}
           height={imageHeight}

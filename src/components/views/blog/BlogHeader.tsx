@@ -1,8 +1,8 @@
-import Link from "next/link";
-import Image from "next/image";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
-import { Heart, Eye, Send } from "lucide-react";
+import { Eye, Heart, Send } from "lucide-react";
+import Image from "next/image";
+import Link from "next/link";
 
 interface BlogHeaderProps {
   title: string;
@@ -40,7 +40,7 @@ export const BlogHeader = ({
       {/* Cover Image Section */}
       <div className="bg-[#13161C] px-4 py-8">
         <div className="container mx-auto">
-          <div className="relative aspect-[16/9] w-full overflow-hidden rounded-lg shadow-[0_8px_30px_rgb(0,0,0,0.12)] transition-all hover:shadow-[0_8px_30px_rgb(0,0,0,0.24)]">
+          <div className="relative aspect-[32/9] w-full overflow-hidden rounded-lg shadow-[0_8px_30px_rgb(0,0,0,0.12)] transition-all hover:shadow-[0_8px_30px_rgb(0,0,0,0.24)]">
             <Image src={imageUrl} alt={title} fill className="object-cover" priority />
           </div>
         </div>

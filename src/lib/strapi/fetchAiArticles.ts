@@ -1,70 +1,9 @@
 import {
-  Article,
+  // Article, // Removed as fetchArticleBySlug was moved
   ArticleSummaryFromAPI,
   StrapiListResponse,
-  StrapiSingleResponse,
 } from "@/types/article";
-import qs from "qs"; // You'll need to install this: npm install qs @types/qs
-
-const STRAPI_URL = process.env.NEXT_STRAPI_CMS_API_URL;
-const STRAPI_TOKEN = process.env.NEXT_STRAPI_CMS_API_TOKEN;
-
-if (!STRAPI_URL || !STRAPI_TOKEN) {
-  throw new Error(
-    "Missing Strapi URL or Token in environment variables. Please check your .env file."
-  );
-}
-
-// Define a type for the generic response before parsing
-type StrapiApiResponse<T> = StrapiListResponse<T> | StrapiSingleResponse<T>;
-
-// Generic fetch function for Strapi API - return type adjusted later
-async function fetchStrapiAPI(
-  path: string,
-  urlParamsObject: Record<string, any> = {},
-  options: RequestInit = {}
-): Promise<any> {
-  // Return any for now, specific functions will cast
-  try {
-    // Merge default and user options
-    const mergedOptions: RequestInit = {
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${STRAPI_TOKEN}`,
-      },
-      cache: "no-store", // Adjust cache strategy as needed (e.g., 'force-cache' or revalidate time)
-      ...options,
-    };
-
-    // Build request URL
-    const queryString = qs.stringify(urlParamsObject, {
-      encodeValuesOnly: true, // prettify URL
-    });
-    const requestUrl = `${STRAPI_URL}${path}${queryString ? `?${queryString}` : ""}`;
-
-    console.log("Fetching Strapi:", requestUrl); // Optional: log the URL
-
-    // Trigger API call
-    const response = await fetch(requestUrl, mergedOptions);
-
-    // Handle response
-    if (!response.ok) {
-      console.error("Strapi API Error Status:", response.status);
-      const errorBody = await response.text(); // Read response body for more details
-      console.error("Strapi API Error Body:", errorBody);
-      throw new Error(`Failed to fetch Strapi API: ${response.status} ${response.statusText}`);
-    }
-
-    const data = await response.json();
-    return data;
-  } catch (error) {
-    console.error("Error in fetchStrapiAPI:", error);
-    // Re-throw or handle error appropriately for your application
-    throw new Error(
-      `An error occurred while fetching from Strapi: ${error instanceof Error ? error.message : String(error)}`
-    );
-  }
-}
+import { fetchStrapiAPI } from "./client"; // Import the shared fetch function
 
 /**
  * Fetches the latest 6 articles for the homepage.
@@ -102,7 +41,7 @@ export async function fetchBlogIndexArticles(
   pageSize: number = 10
 ): Promise<StrapiListResponse<ArticleSummaryFromAPI>> {
   const queryParams = {
-    fields: ["title", "description", "slug", "publishedAt"],
+    fields: ["title", "description", "slug", "publishedAt", "coverUrl"],
     populate: {
       cover: {
         fields: ["url", "alternativeText", "width", "height", "formats"],
@@ -125,42 +64,6 @@ export async function fetchBlogIndexArticles(
     "/articles", // Changed from /ai-articles
     queryParams
   ) as Promise<StrapiListResponse<ArticleSummaryFromAPI>>;
-}
-
-/**
- * Fetches a single article by its slug for the detail page.
- * Expects a list response (Strapi filtering returns an array) containing the flat Article type.
- */
-export async function fetchArticleBySlug(slug: string): Promise<StrapiListResponse<Article>> {
-  const queryParams = {
-    filters: {
-      slug: {
-        $eq: slug,
-      },
-    },
-    populate: {
-      cover: {
-        fields: ["url", "alternativeText", "width", "height", "caption"],
-      },
-      author: {
-        fields: ["name"],
-      },
-      category: {
-        fields: ["name", "slug"],
-      },
-      // Re-enable blocks population using the correct nested syntax
-      blocks: {
-        populate: "*", // Populate all fields/relations 1 level deep inside each block component
-      },
-    },
-    pagination: {
-      pageSize: 1,
-      page: 1,
-    },
-  };
-
-  // The response data array will contain objects matching the flat Article type
-  return fetchStrapiAPI("/articles", queryParams) as Promise<StrapiListResponse<Article>>;
 }
 
 /**
