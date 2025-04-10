@@ -1,13 +1,25 @@
+import { ArticleSummaryFromAPI } from "@/types/article";
 import Link from "next/link";
 import { BlogCard } from "./BlogCard";
-import { BlogPostData } from "@/types/blog";
+// Import the helper function if needed, or define locally
+// import { getStrapiImageUrl } from '@/utils/imageUrl'; // Example path
 
 interface BlogSimilarPostsProps {
-  posts: BlogPostData[];
+  posts: ArticleSummaryFromAPI[];
 }
 
 export const BlogSimilarPosts = ({ posts }: BlogSimilarPostsProps) => {
-  if (posts.length === 0) return null;
+  if (!posts || posts.length === 0) return null; // Add null check for safety
+
+  // Define helper here for simplicity, or import from utils
+  const getStrapiImageUrl = (coverData: ArticleSummaryFromAPI["cover"]) => {
+    const thumbnailUrl = coverData?.formats?.thumbnail?.url;
+    const originalUrl = coverData?.url;
+    const url = thumbnailUrl || originalUrl;
+    return url
+      ? `${process.env.NEXT_PUBLIC_STRAPI_CMS_BASE_URL || ""}${url}`
+      : "/images/placeholder-image.jpg";
+  };
 
   return (
     <div className="border-t border-[#1E2329] bg-[#13161C] py-16">
@@ -23,9 +35,27 @@ export const BlogSimilarPosts = ({ posts }: BlogSimilarPostsProps) => {
           </Link>
         </div>
         <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
-          {posts.map((post) => (
-            <BlogCard key={post.slug} {...post} />
-          ))}
+          {posts.map((post) => {
+            // Map ArticleSummaryFromAPI to BlogCardProps
+            const cardProps = {
+              slug: post.slug,
+              title: post.title || "Untitled Post",
+              excerpt: post.description || "",
+              imageUrl: getStrapiImageUrl(post.cover),
+              authorName: post.author?.name || "Unknown Author",
+              // authorImageUrl: post.author?.avatar?.url, // Add if available
+              date: post.publishedAt
+                ? new Date(post.publishedAt).toLocaleDateString("en-US", {
+                    year: "numeric",
+                    month: "short",
+                    day: "numeric",
+                  })
+                : "",
+              // tags: post.category ? [post.category.name] : [], // Optional: Map category to tags
+            };
+
+            return <BlogCard key={post.id} {...cardProps} />;
+          })}
         </div>
       </div>
     </div>

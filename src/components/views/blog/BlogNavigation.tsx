@@ -1,10 +1,15 @@
-import Link from "next/link";
 import { ArrowLeftIcon, ArrowRightIcon } from "lucide-react";
-import { BlogPostData } from "@/types/blog";
+import Link from "next/link";
+
+// Define a simpler type for navigation links
+interface NavPostLink {
+  slug: string;
+  title: string;
+}
 
 interface BlogNavigationProps {
-  previous: BlogPostData | null;
-  next: BlogPostData | null;
+  previous: NavPostLink | null;
+  next: NavPostLink | null;
 }
 
 export const BlogNavigation = ({ previous, next }: BlogNavigationProps) => {

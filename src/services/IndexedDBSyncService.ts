@@ -1,6 +1,6 @@
-import { openDB, IDBPDatabase, deleteDB } from "idb";
 import { INDEXEDDB_CONFIG } from "@/constants/indexeddb";
 import type { Package } from "@/types/package";
+import { IDBPDatabase, deleteDB, openDB } from "idb";
 
 export class IndexedDBSyncService {
   private static instance: IndexedDBSyncService;
@@ -23,16 +23,16 @@ export class IndexedDBSyncService {
         this.db = await openDB(this.DB_NAME, this.DB_VERSION, {
           upgrade(db, oldVersion, newVersion) {
             // Create stores for packages
-            if (!db.objectStoreNames.contains(INDEXEDDB_CONFIG.STORES.PACKAGES)) {
-              db.createObjectStore(INDEXEDDB_CONFIG.STORES.PACKAGES, { keyPath: "id" });
+            if (!db.objectStoreNames.contains(INDEXEDDB_CONFIG.STORES.AI_ARTICLES)) {
+              db.createObjectStore(INDEXEDDB_CONFIG.STORES.AI_ARTICLES, { keyPath: "id" });
             }
-            if (!db.objectStoreNames.contains(INDEXEDDB_CONFIG.STORES.HOMEPAGE_PACKAGES)) {
-              db.createObjectStore(INDEXEDDB_CONFIG.STORES.HOMEPAGE_PACKAGES, { keyPath: "id" });
+            if (!db.objectStoreNames.contains(INDEXEDDB_CONFIG.STORES.HOMEPAGE_AI_ARTICLES)) {
+              db.createObjectStore(INDEXEDDB_CONFIG.STORES.HOMEPAGE_AI_ARTICLES, { keyPath: "id" });
             }
             // Create store for package details
-            if (!db.objectStoreNames.contains(INDEXEDDB_CONFIG.STORES.PACKAGE_DETAILS)) {
-              db.createObjectStore(INDEXEDDB_CONFIG.STORES.PACKAGE_DETAILS, {
-                keyPath: "packageName",
+            if (!db.objectStoreNames.contains(INDEXEDDB_CONFIG.STORES.AI_ARTICLE_DETAILS)) {
+              db.createObjectStore(INDEXEDDB_CONFIG.STORES.AI_ARTICLE_DETAILS, {
+                keyPath: "id",
               });
             }
           },
@@ -107,8 +107,8 @@ export class IndexedDBSyncService {
   public async savePackages(packages: Package[]): Promise<void> {
     try {
       const db = await this.initDB();
-      const tx = db.transaction(INDEXEDDB_CONFIG.STORES.PACKAGES, "readwrite");
-      const store = tx.objectStore(INDEXEDDB_CONFIG.STORES.PACKAGES);
+      const tx = db.transaction(INDEXEDDB_CONFIG.STORES.AI_ARTICLES, "readwrite");
+      const store = tx.objectStore(INDEXEDDB_CONFIG.STORES.AI_ARTICLES);
 
       await store.clear();
       for (const pkg of packages) {
@@ -121,8 +121,8 @@ export class IndexedDBSyncService {
       await this.handleDatabaseError(error);
       // Retry once after database recreation
       const db = await this.initDB();
-      const tx = db.transaction(INDEXEDDB_CONFIG.STORES.PACKAGES, "readwrite");
-      const store = tx.objectStore(INDEXEDDB_CONFIG.STORES.PACKAGES);
+      const tx = db.transaction(INDEXEDDB_CONFIG.STORES.AI_ARTICLES, "readwrite");
+      const store = tx.objectStore(INDEXEDDB_CONFIG.STORES.AI_ARTICLES);
 
       await store.clear();
       for (const pkg of packages) {
@@ -137,20 +137,20 @@ export class IndexedDBSyncService {
   public async getPackages(): Promise<Package[]> {
     try {
       const db = await this.initDB();
-      return db.getAll(INDEXEDDB_CONFIG.STORES.PACKAGES);
+      return db.getAll(INDEXEDDB_CONFIG.STORES.AI_ARTICLES);
     } catch (error) {
       await this.handleDatabaseError(error);
       // Retry once after database recreation
       const db = await this.initDB();
-      return db.getAll(INDEXEDDB_CONFIG.STORES.PACKAGES);
+      return db.getAll(INDEXEDDB_CONFIG.STORES.AI_ARTICLES);
     }
   }
 
   public async saveHomepagePackages(packages: Package[]): Promise<void> {
     try {
       const db = await this.initDB();
-      const tx = db.transaction(INDEXEDDB_CONFIG.STORES.HOMEPAGE_PACKAGES, "readwrite");
-      const store = tx.objectStore(INDEXEDDB_CONFIG.STORES.HOMEPAGE_PACKAGES);
+      const tx = db.transaction(INDEXEDDB_CONFIG.STORES.HOMEPAGE_AI_ARTICLES, "readwrite");
+      const store = tx.objectStore(INDEXEDDB_CONFIG.STORES.HOMEPAGE_AI_ARTICLES);
 
       await store.clear();
       for (const pkg of packages) {
@@ -163,8 +163,8 @@ export class IndexedDBSyncService {
       await this.handleDatabaseError(error);
       // Retry once after database recreation
       const db = await this.initDB();
-      const tx = db.transaction(INDEXEDDB_CONFIG.STORES.HOMEPAGE_PACKAGES, "readwrite");
-      const store = tx.objectStore(INDEXEDDB_CONFIG.STORES.HOMEPAGE_PACKAGES);
+      const tx = db.transaction(INDEXEDDB_CONFIG.STORES.HOMEPAGE_AI_ARTICLES, "readwrite");
+      const store = tx.objectStore(INDEXEDDB_CONFIG.STORES.HOMEPAGE_AI_ARTICLES);
 
       await store.clear();
       for (const pkg of packages) {
@@ -179,12 +179,12 @@ export class IndexedDBSyncService {
   public async getHomepagePackages(): Promise<Package[]> {
     try {
       const db = await this.initDB();
-      return db.getAll(INDEXEDDB_CONFIG.STORES.HOMEPAGE_PACKAGES);
+      return db.getAll(INDEXEDDB_CONFIG.STORES.HOMEPAGE_AI_ARTICLES);
     } catch (error) {
       await this.handleDatabaseError(error);
       // Retry once after database recreation
       const db = await this.initDB();
-      return db.getAll(INDEXEDDB_CONFIG.STORES.HOMEPAGE_PACKAGES);
+      return db.getAll(INDEXEDDB_CONFIG.STORES.HOMEPAGE_AI_ARTICLES);
     }
   }
 
@@ -192,8 +192,8 @@ export class IndexedDBSyncService {
   public async savePackageDetails(details: any[]): Promise<void> {
     try {
       const db = await this.initDB();
-      const tx = db.transaction(INDEXEDDB_CONFIG.STORES.PACKAGE_DETAILS, "readwrite");
-      const store = tx.objectStore(INDEXEDDB_CONFIG.STORES.PACKAGE_DETAILS);
+      const tx = db.transaction(INDEXEDDB_CONFIG.STORES.AI_ARTICLE_DETAILS, "readwrite");
+      const store = tx.objectStore(INDEXEDDB_CONFIG.STORES.AI_ARTICLE_DETAILS);
 
       await store.clear();
       for (const detail of details) {
@@ -206,8 +206,8 @@ export class IndexedDBSyncService {
       await this.handleDatabaseError(error);
       // Retry once after database recreation
       const db = await this.initDB();
-      const tx = db.transaction(INDEXEDDB_CONFIG.STORES.PACKAGE_DETAILS, "readwrite");
-      const store = tx.objectStore(INDEXEDDB_CONFIG.STORES.PACKAGE_DETAILS);
+      const tx = db.transaction(INDEXEDDB_CONFIG.STORES.AI_ARTICLE_DETAILS, "readwrite");
+      const store = tx.objectStore(INDEXEDDB_CONFIG.STORES.AI_ARTICLE_DETAILS);
 
       await store.clear();
       for (const detail of details) {
@@ -222,12 +222,12 @@ export class IndexedDBSyncService {
   public async getPackageDetails(): Promise<any[]> {
     try {
       const db = await this.initDB();
-      return db.getAll(INDEXEDDB_CONFIG.STORES.PACKAGE_DETAILS);
+      return db.getAll(INDEXEDDB_CONFIG.STORES.AI_ARTICLE_DETAILS);
     } catch (error) {
       await this.handleDatabaseError(error);
       // Retry once after database recreation
       const db = await this.initDB();
-      return db.getAll(INDEXEDDB_CONFIG.STORES.PACKAGE_DETAILS);
+      return db.getAll(INDEXEDDB_CONFIG.STORES.AI_ARTICLE_DETAILS);
     }
   }
 }

@@ -1,14 +1,39 @@
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Badge } from "@/components/ui/badge";
+import { Article } from "@/types/article";
 import { List } from "lucide-react";
-import { BlogPostData } from "@/types/blog";
 
 interface BlogSidebarProps {
-  post: BlogPostData;
+  post: Article | null;
   tableOfContents: Array<{ title: string; id: string }>;
 }
 
 export const BlogSidebar = ({ post, tableOfContents }: BlogSidebarProps) => {
+  if (!post) {
+    return (
+      <aside className="lg:col-span-1">
+        <div className="sticky top-24 space-y-8">
+          <div className="rounded-lg bg-[#1E2329] p-6">
+            <h3 className="mb-4 text-lg font-semibold text-white">Post Details</h3>
+            <p className="text-gray-400">Loading details...</p>
+          </div>
+          <div className="rounded-lg bg-[#1E2329] p-6">
+            <h3 className="mb-4 text-lg font-semibold text-white">Table of Contents</h3>
+            <p className="text-gray-400">Loading contents...</p>
+          </div>
+        </div>
+      </aside>
+    );
+  }
+
+  const publicationDate = post.publishedAt
+    ? new Date(post.publishedAt).toLocaleDateString("en-US", {
+        year: "numeric",
+        month: "long",
+        day: "numeric",
+      })
+    : "N/A";
+  const categoryName = post.category?.data?.attributes?.name || "Uncategorized";
+  const authorName = post.author?.data?.attributes?.name || "Unknown Author";
+
   return (
     <aside className="lg:col-span-1">
       <div className="sticky top-24 space-y-8">
@@ -18,30 +43,16 @@ export const BlogSidebar = ({ post, tableOfContents }: BlogSidebarProps) => {
           <div className="space-y-3 text-sm">
             <div className="flex justify-between">
               <span className="text-gray-400">Publication Date:</span>
-              <span className="text-gray-200">{post.date}</span>
+              <span className="text-gray-200">{publicationDate}</span>
             </div>
             <div className="flex justify-between">
               <span className="text-gray-400">Category:</span>
-              <span className="text-gray-200">{post.category}</span>
-            </div>
-            <div className="flex justify-between">
-              <span className="text-gray-400">Reading Time:</span>
-              <span className="text-gray-200">{post.readingTime}</span>
+              <span className="text-gray-200">{categoryName}</span>
             </div>
             <div className="flex justify-between">
               <span className="text-gray-400">Author Name:</span>
-              <span className="text-gray-200">{post.authorName}</span>
+              <span className="text-gray-200">{authorName}</span>
             </div>
-            {post.authorImageUrl && (
-              <div className="flex items-center justify-end pt-2">
-                <Avatar className="h-8 w-8">
-                  <AvatarImage src={post.authorImageUrl} alt={post.authorName} />
-                  <AvatarFallback className="bg-gray-700 text-white">
-                    {post.authorName.charAt(0)}
-                  </AvatarFallback>
-                </Avatar>
-              </div>
-            )}
           </div>
         </div>
 
@@ -62,20 +73,6 @@ export const BlogSidebar = ({ post, tableOfContents }: BlogSidebarProps) => {
             ))}
           </ul>
         </div>
-
-        {/* Tags Box */}
-        {post.tags && post.tags.length > 0 && (
-          <div className="rounded-lg bg-[#1E2329] p-6">
-            <h3 className="mb-4 text-lg font-semibold text-white">Tags</h3>
-            <div className="flex flex-wrap gap-2">
-              {post.tags.map((tag) => (
-                <Badge key={tag} className="bg-[#13161C] text-teal-400 hover:bg-[#262B33]">
-                  {tag}
-                </Badge>
-              ))}
-            </div>
-          </div>
-        )}
       </div>
     </aside>
   );

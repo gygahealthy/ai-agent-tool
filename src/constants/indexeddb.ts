@@ -1,8 +1,8 @@
 export const INDEXEDDB_CONFIG = {
-  DATABASE_NAME: "mobifone-packages",
+  DATABASE_NAME: "aiagent-tool",
   STORES: {
-    PACKAGES: "packages",
-    HOMEPAGE_PACKAGES: "homepage_packages",
-    PACKAGE_DETAILS: "package_details",
+    AI_ARTICLES: "ai_articles",
+    HOMEPAGE_AI_ARTICLES: "homepage_ai_articles",
+    AI_ARTICLE_DETAILS: "ai_article_details",
   },
 } as const;

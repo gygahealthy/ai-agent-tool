@@ -1,69 +1,19 @@
-import { BlogCard } from "@/components/views/blog/BlogCard";
+import { Clock, Search } from "lucide-react";
+import { GetStaticProps } from "next";
+import Image from "next/image";
+import Link from "next/link";
+// Components
 import { MainLayout } from "@/components/layouts/MainLayout";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Search, TrendingUp, Clock, BookOpen } from "lucide-react";
-import Image from "next/image";
-import Link from "next/link";
+import { BlogCard } from "@/components/views/blog/BlogCard";
 import { BlogCTA } from "@/components/views/blog/BlogCTA";
+// Api
+import { fetchBlogIndexArticles } from "@/lib/strapi/fetchAiArticles";
+import { ArticleSummaryFromAPI, StrapiListResponse } from "@/types/article";
 
-// Placeholder data for blog posts
-const blogPosts = [
-  {
-    slug: "ai-in-web-design",
-    title: "The Rising Impact of AI in Modern Web Design",
-    excerpt:
-      "Explore how artificial intelligence is revolutionizing web design, from automated layouts to personalized user experiences.",
-    imageUrl:
-      "https://images.unsplash.com/photo-1620712943543-bcc4688e7485?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80", // Robot hand touch
-    authorName: "Alex Johnson",
-    authorImageUrl: "/images/authors/alex.jpg", // Placeholder path
-    date: "Apr 07, 2024",
-    tags: ["AI", "Web Design", "Technology"],
-  },
-  {
-    slug: "optimizing-images-with-ai",
-    title: "Optimizing Images for the Web Using AI Tools",
-    excerpt:
-      "Learn about cutting-edge AI tools that automatically compress and enhance images for faster load times and better quality.",
-    imageUrl:
-      "https://images.unsplash.com/photo-1550745165-9bc0b252726f?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80", // Colorful VR/tech
-    authorName: "Samantha Lee",
-    authorImageUrl: "/images/authors/samantha.jpg", // Placeholder path
-    date: "Apr 05, 2024",
-    tags: ["AI", "Optimization", "Images"],
-  },
-  {
-    slug: "future-of-content-creation",
-    title: "AI and the Future of Content Creation",
-    excerpt:
-      "How AI algorithms are changing the landscape of content creation, from writing articles to generating video scripts.",
-    imageUrl:
-      "https://images.unsplash.com/photo-1677759946174-3a0d4937a5f3?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80", // AI face wires
-    authorName: "David Chen",
-    date: "Apr 02, 2024",
-    tags: ["AI", "Content Marketing", "Future Tech"],
-  },
-  // Add more placeholder posts as needed
-  {
-    slug: "ethical-ai-development",
-    title: "Navigating the Ethics of AI Development",
-    excerpt:
-      "A look into the important ethical considerations developers must address when building AI systems.",
-    imageUrl:
-      "https://images.unsplash.com/photo-1581090464777-f3220bbe1b8b?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80", // AI/Code concept
-    authorName: "Maria Garcia",
-    authorImageUrl: "/images/authors/maria.jpg", // Placeholder path
-    date: "Mar 30, 2024",
-    tags: ["AI", "Ethics", "Development"],
-  },
-];
-
-// Featured post data
-const featuredPost = blogPosts[0];
-
-// Categories for blog posts
+// Categories for blog posts - Keep static for now
 const categories = [
   { name: "AI & Technology", count: 12, color: "bg-blue-500/10 text-blue-400" },
   { name: "Web Design", count: 8, color: "bg-purple-500/10 text-purple-400" },
@@ -71,15 +21,37 @@ const categories = [
   { name: "Ethics", count: 6, color: "bg-orange-500/10 text-orange-400" },
 ];
 
-export default function BlogIndexPage() {
-  // Get latest posts excluding featured
-  const latestPosts = blogPosts.slice(1, 4);
-  // Get trending posts (could be based on views/likes)
-  const trendingPosts = [...blogPosts].sort(() => 0.5 - Math.random()).slice(0, 3);
+// Define props type for the page component
+interface BlogIndexPageProps {
+  articles?: ArticleSummaryFromAPI[] | null;
+}
+
+export default function BlogIndexPage({ articles }: BlogIndexPageProps) {
+  const safeArticles = Array.isArray(articles) ? articles : [];
+
+  const featuredPostData = safeArticles.length > 0 ? safeArticles[0] : null;
+  const latestPostsData = safeArticles.slice(1);
+
+  // Helper function to get Strapi image URL, prioritizing thumbnail
+  const getStrapiImageUrl = (coverData: ArticleSummaryFromAPI["cover"]) => {
+    // Prioritize thumbnail URL if available
+    const thumbnailUrl = coverData?.formats?.thumbnail?.url;
+    const originalUrl = coverData?.url;
+    const url = thumbnailUrl || originalUrl;
+
+    return url
+      ? `${process.env.NEXT_PUBLIC_STRAPI_CMS_BASE_URL || ""}${url}`
+      : "/images/placeholder-image.jpg"; // Fallback
+  };
+
+  // Helper function for author name - adjust for flat structure
+  const getAuthorName = (authorData: ArticleSummaryFromAPI["author"]) => {
+    return authorData?.name || "Unknown Author"; // Access name directly if author is not null
+  };
 
   return (
     <MainLayout
-      title="Blog - AI Visuals"
+      title="Blog - AI Insights"
       description="Explore articles on AI, web design, image optimization, and the future of technology."
     >
       <div className="min-h-screen bg-[#13161C] text-white">
@@ -102,39 +74,51 @@ export default function BlogIndexPage() {
               </div>
             </div>
 
-            {/* Featured Post */}
-            <div className="grid gap-8 lg:grid-cols-2">
-              <div className="relative aspect-[16/9] overflow-hidden rounded-xl lg:aspect-auto lg:h-full">
-                <Image
-                  src={featuredPost.imageUrl}
-                  alt={featuredPost.title}
-                  fill
-                  className="object-cover transition-transform hover:scale-105"
-                  priority
-                />
-              </div>
-              <div className="flex flex-col justify-center">
-                <Badge className="mb-4 w-fit bg-teal-500/10 text-teal-400">Featured Post</Badge>
-                <h2 className="mb-4 text-3xl font-bold">{featuredPost.title}</h2>
-                <p className="mb-6 text-gray-400">{featuredPost.excerpt}</p>
-                <div className="mb-6 flex items-center gap-4">
-                  <div className="flex items-center gap-2">
-                    <Image
-                      src={featuredPost.authorImageUrl || "/images/placeholder-avatar.png"}
-                      alt={featuredPost.authorName}
-                      width={32}
-                      height={32}
-                      className="rounded-full"
-                    />
-                    <span className="text-sm text-gray-400">{featuredPost.authorName}</span>
-                  </div>
-                  <span className="text-sm text-gray-400">{featuredPost.date}</span>
+            {/* Featured Post - Access data directly */}
+            {featuredPostData && (
+              <div className="grid gap-8 lg:grid-cols-2">
+                <div className="relative aspect-[16/9] overflow-hidden rounded-xl lg:aspect-auto lg:h-full">
+                  <Image
+                    src={getStrapiImageUrl(featuredPostData.cover)} // Pass cover directly
+                    alt={featuredPostData.title || "Featured post image"} // Access title directly
+                    fill
+                    className="object-cover transition-transform hover:scale-105"
+                    priority
+                  />
                 </div>
-                <Link href={`/blog/${featuredPost.slug}`}>
-                  <Button className="w-fit bg-teal-500 hover:bg-teal-600">Read More</Button>
-                </Link>
+                <div className="flex flex-col justify-center">
+                  <Badge className="mb-4 w-fit bg-teal-500/10 text-teal-400">Featured Post</Badge>
+                  <h2 className="mb-4 text-3xl font-bold">{featuredPostData.title}</h2>
+                  {/* Description might be null, provide fallback */}
+                  <p className="mb-6 text-gray-400">
+                    {featuredPostData.description || "No description available."}
+                  </p>
+                  <div className="mb-6 flex items-center gap-4">
+                    <div className="flex items-center gap-2">
+                      <span className="text-sm text-gray-400">
+                        {getAuthorName(featuredPostData.author)} {/* Pass author directly */}
+                      </span>
+                    </div>
+                    <span className="text-sm text-gray-400">
+                      {featuredPostData.publishedAt && // Check publishedAt directly
+                        new Date(featuredPostData.publishedAt).toLocaleDateString("en-US", {
+                          year: "numeric",
+                          month: "long",
+                          day: "numeric",
+                        })}
+                    </span>
+                  </div>
+                  {featuredPostData.slug && ( // Check slug directly
+                    <Link href={`/blog/${featuredPostData.slug}`}>
+                      <Button className="w-fit bg-teal-500 hover:bg-teal-600">Read More</Button>
+                    </Link>
+                  )}
+                </div>
               </div>
-            </div>
+            )}
+            {!featuredPostData && (
+              <p className="text-center text-gray-400">No featured articles found.</p>
+            )}
           </div>
         </div>
 
@@ -143,30 +127,39 @@ export default function BlogIndexPage() {
           <div className="grid gap-12 lg:grid-cols-3">
             {/* Main Posts Column */}
             <div className="lg:col-span-2">
-              {/* Latest Posts */}
+              {/* Latest Posts - Access data directly */}
               <section className="mb-16">
                 <div className="mb-8 flex items-center justify-between">
                   <h2 className="text-2xl font-bold">Latest Articles</h2>
                   <Clock className="h-5 w-5 text-teal-400" />
                 </div>
-                <div className="grid gap-8 md:grid-cols-2">
-                  {latestPosts.map((post) => (
-                    <BlogCard key={post.slug} {...post} />
-                  ))}
-                </div>
-              </section>
+                {latestPostsData.length > 0 ? (
+                  <div className="grid gap-8 md:grid-cols-2">
+                    {latestPostsData
+                      .filter((article) => !!article.publishedAt)
+                      .map((article) => {
+                        const slug = article.slug;
+                        const publishedAt = article.publishedAt;
 
-              {/* Trending Posts */}
-              <section>
-                <div className="mb-8 flex items-center justify-between">
-                  <h2 className="text-2xl font-bold">Trending Now</h2>
-                  <TrendingUp className="h-5 w-5 text-teal-400" />
-                </div>
-                <div className="grid gap-8 md:grid-cols-2">
-                  {trendingPosts.map((post) => (
-                    <BlogCard key={post.slug} {...post} />
-                  ))}
-                </div>
+                        const cardProps = {
+                          slug: slug || "#",
+                          title: article.title,
+                          excerpt: article.description || "",
+                          // Pass the prioritized URL (thumbnail or original)
+                          imageUrl: getStrapiImageUrl(article.cover),
+                          authorName: getAuthorName(article.author),
+                          date: new Date(publishedAt!).toLocaleDateString("en-US", {
+                            year: "numeric",
+                            month: "long",
+                            day: "numeric",
+                          }),
+                        };
+                        return slug ? <BlogCard key={article.id} {...cardProps} /> : null;
+                      })}
+                  </div>
+                ) : (
+                  <p className="text-gray-400">No more articles found.</p>
+                )}
               </section>
             </div>
 
@@ -206,10 +199,34 @@ export default function BlogIndexPage() {
             </aside>
           </div>
         </div>
+        {/* Add CTA Section */}
+        <BlogCTA />
       </div>
     </MainLayout>
   );
 }
 
-{/* Add CTA Section */}
-<BlogCTA />
+// Fetch articles at build time
+export const getStaticProps: GetStaticProps = async () => {
+  let articles: ArticleSummaryFromAPI[] = []; // Use correct type
+  try {
+    // Expecting StrapiListResponse<ArticleSummaryFromAPI>
+    const response: StrapiListResponse<ArticleSummaryFromAPI> = await fetchBlogIndexArticles();
+    // Log the raw data received from the API to inspect its structure
+    console.log("Fetched articles data:", JSON.stringify(response.data, null, 2));
+    articles = response.data; // Data should already be the correct array structure
+  } catch (error) {
+    console.error("Error fetching blog index articles:", error);
+    articles = [];
+  }
+
+  // Log the articles array being passed as props
+  console.log("Articles passed to props:", JSON.stringify(articles, null, 2));
+
+  return {
+    props: {
+      articles,
+    },
+    // No revalidate
+  };
+};

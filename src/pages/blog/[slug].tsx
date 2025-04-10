@@ -1,4 +1,11 @@
+import { customMarkdownComponents } from "@/components/markdown/CustomMarkdownComponents"; // Import custom components
+import { GetStaticPaths, GetStaticProps } from "next";
+import Image from "next/image"; // Import Image if needed for block rendering
 import { useRouter } from "next/router";
+import ReactMarkdown from "react-markdown"; // Import for rendering RichText blocks
+import rehypeRaw from "rehype-raw"; // Import the rehype-raw plugin
+import remarkGfm from "remark-gfm"; // Import the GFM plugin
+//
 import { MainLayout } from "@/components/layouts/MainLayout";
 //
 import { BlogCTA } from "@/components/views/blog/BlogCTA";
@@ -6,159 +13,167 @@ import { BlogComment } from "@/components/views/blog/BlogComment";
 // Add to imports
 import { BlogHeader } from "@/components/views/blog/BlogHeader";
 import { BlogNavigation } from "@/components/views/blog/BlogNavigation";
-import { BlogSimilarPosts } from "@/components/views/blog/BlogSimilarPosts";
 import { BlogSidebar } from "@/components/views/blog/BlogSidebar";
+import { BlogSimilarPosts } from "@/components/views/blog/BlogSimilarPosts";
+//
+import { fetchAllArticleSlugs, fetchArticleBySlug } from "@/lib/strapi/fetchAiArticles"; // Import the new slug fetcher
+import {
+  Article, // Import the updated flat Article type
+  ArticleBlock,
+  StrapiListResponse,
+} from "@/types/article";
+import { slugify } from "@/utils/slugify"; // Import slugify
+import { useEffect, useState } from "react";
+import remarkParse from "remark-parse";
+import { unified } from "unified";
+import { visit } from "unist-util-visit";
 
 // Placeholder data (in a real app, fetch this based on the slug)
+// REMOVE STATIC blogPosts object - data comes from Strapi now
+/*
 const blogPosts = {
-  "ai-in-web-design": {
-    slug: "ai-in-web-design",
-    title: "The Rising Impact of AI in Modern Web Design",
-    excerpt:
-      "Explore how artificial intelligence is revolutionizing web design, from automated layouts to personalized user experiences.",
-    imageUrl:
-      "https://images.unsplash.com/photo-1620712943543-bcc4688e7485?ixlib=rb-4.0.3&auto=format&fit=crop&w=1600&q=80", // Larger image for cover
-    authorName: "Alex Johnson",
-    authorImageUrl: "/images/authors/alex.jpg",
-    date: "Apr 07, 2024",
-    category: "Web Design",
-    readingTime: "8 Min",
-    tags: ["AI", "Web Design", "Technology"],
-    content: `
-<h2 class="text-3xl font-semibold mb-4 text-white" id="introduction">Introduction</h2>
-<p class="mb-6 text-lg text-gray-300">Artificial Intelligence (AI) has emerged as a transformative force in the web design industry, reshaping user experiences, workflows, and the very nature of digital interfaces. In this blog post, we explore the profound impact of AI in web design, from revolutionizing design processes to enhancing user engagement.</p>
-
-<div class="my-12 rounded-lg bg-[#0D2A2D] p-8 md:p-12">
-  <div class="mx-auto max-w-3xl">
-    <div class="text-lg leading-relaxed text-[#94A3B8] md:text-xl">
-      Hustle and Cashflow is a blog that aims to educate millennials on personal finance. What allows to differ from other personal finance blogs, is how we chose to communicate personal finance and money to millennials using humour and relatable language while providing quality information about how to deal with money and sharing stories of young people overcoming their financial struggle.
-    </div>
-    <div class="mt-6 border-t border-[#1E4145] pt-4 text-sm text-[#64748B]">
-      PHILIP REYES
-    </div>
-  </div>
-</div>
-
-<h2 class="text-3xl font-semibold mb-4 mt-8 text-white" id="ai-powered-tools">AI-Powered Design Tools</h2>
-<p class="mb-6 text-lg text-gray-300">AI is powering a new generation of design tools that automate repetitive tasks, suggest layout options, and even generate code. Platforms leverage AI to analyze user data and create personalized website experiences in real-time.</p>
-
-<figure class="my-8">
-  <img src="https://images.unsplash.com/photo-1684493735679-b5983e1e3b39?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80" alt="Abstract sphere grid" class="rounded-lg mx-auto" />
-  <figcaption class="mt-2 text-center text-sm text-gray-500">AI generating abstract design patterns.</figcaption>
-</figure>
-
-<h2 class="text-3xl font-semibold mb-4 mt-8 text-white" id="personalization">Enhanced Personalization</h2>
-<p class="mb-6 text-lg text-gray-300">AI algorithms analyze user behavior, preferences, and demographics to tailor website content, layouts, and recommendations. This level of personalization leads to higher engagement rates and improved conversion metrics.</p>
-
-<div class="my-12 rounded-lg bg-[#0D2A2D] p-8 md:p-12">
-  <div class="mx-auto max-w-3xl">
-    <div class="text-lg leading-relaxed text-[#94A3B8] md:text-xl">
-      It often makes reference to pop culture and the latest internet jokes, allowing our readers to have a place to learn and develop a sense of community.
-    </div>
-    <div class="mt-6 border-t border-[#1E4145] pt-4 text-sm text-[#64748B]">
-      ALEX JOHNSON
-    </div>
-  </div>
-</div>
-
-<ul class="mb-6 list-disc space-y-2 pl-6 text-lg text-gray-300">
-  <li>Dynamic content adaptation</li>
-  <li>Personalized product recommendations</li>
-  <li>User-specific UI adjustments</li>
-</ul>
-
-<h2 class="text-3xl font-semibold mb-4 mt-8 text-white" id="conclusion">Conclusion</h2>
-<p class="text-lg text-gray-300">The integration of AI in web design is not just a trend; it's a fundamental shift in how we create and interact with digital experiences. By embracing AI tools and techniques, designers can unlock new levels of creativity, efficiency, and user satisfaction.</p>
-    `,
-  },
-  "optimizing-images-with-ai": {
-    slug: "optimizing-images-with-ai",
-    title: "Optimizing Images for the Web Using AI Tools",
-    excerpt:
-      "Learn about cutting-edge AI tools that automatically compress and enhance images for faster load times and better quality.",
-    imageUrl:
-      "https://images.unsplash.com/photo-1550745165-9bc0b252726f?ixlib=rb-4.0.3&auto=format&fit=crop&w=1600&q=80",
-    authorName: "Samantha Lee",
-    authorImageUrl: "/images/authors/samantha.jpg",
-    date: "Apr 05, 2024",
-    category: "Optimization",
-    readingTime: "6 Min",
-    tags: ["AI", "Optimization", "Images"],
-    content: `<p class="mb-6 text-lg text-gray-300">Image optimization is crucial for web performance. AI tools are making this process smarter and more efficient...</p>`,
-  },
-  "future-of-content-creation": {
-    slug: "future-of-content-creation",
-    title: "AI and the Future of Content Creation",
-    excerpt:
-      "How AI algorithms are changing the landscape of content creation, from writing articles to generating video scripts.",
-    imageUrl:
-      "https://images.unsplash.com/photo-1677759946174-3a0d4937a5f3?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1600&q=80",
-    authorName: "David Chen",
-    authorImageUrl: undefined,
-    date: "Apr 02, 2024",
-    category: "Content Marketing",
-    readingTime: "7 Min",
-    tags: ["AI", "Content Marketing", "Future Tech"],
-    content: `<p class="mb-6 text-lg text-gray-300">AI is rapidly transforming content creation, offering new possibilities for writers, marketers, and creators...</p>`,
-  },
-  "ethical-ai-development": {
-    slug: "ethical-ai-development",
-    title: "Navigating the Ethics of AI Development",
-    excerpt:
-      "A look into the important ethical considerations developers must address when building AI systems.",
-    imageUrl:
-      "https://images.unsplash.com/photo-1581090464777-f3220bbe1b8b?ixlib=rb-4.0.3&auto=format&fit=crop&w=1600&q=80",
-    authorName: "Maria Garcia",
-    authorImageUrl: "/images/authors/maria.jpg",
-    date: "Mar 30, 2024",
-    category: "Ethics",
-    readingTime: "9 Min",
-    tags: ["AI", "Ethics", "Development"],
-    content: `<p class="mb-6 text-lg text-gray-300">As AI becomes more powerful, the ethical implications of its development and deployment are paramount...</p>`,
-  },
+  // ... removed static data ...
 };
+*/
 
 // Helper function to get a few other posts for the 'Similar News' section
+// REMOVE STATIC getSimilarPosts function
+/*
 const getSimilarPosts = (currentSlug: string) => {
-  return Object.values(blogPosts)
-    .filter((post) => post.slug !== currentSlug)
-    .slice(0, 3); // Get up to 3 other posts
+  // ... removed static logic ...
 };
+*/
 
-type BlogPostData = (typeof blogPosts)["ai-in-web-design"]; // Type helper
+// Type helper - No longer needed with Strapi types
+// type BlogPostData = (typeof blogPosts)["ai-in-web-design"];
 
 // Simple Table of Contents data based on example content IDs
-const tableOfContents = [
-  { title: "Introduction", id: "introduction" },
-  { title: "AI-Powered Design Tools", id: "ai-powered-tools" },
-  { title: "Enhanced Personalization", id: "personalization" },
-  { title: "Conclusion", id: "conclusion" },
+// TODO: Generate Table of Contents dynamically from post.blocks (e.g., RichText headings)
+const tableOfContents: { title: string; id: string }[] = [
+  // Example, replace with dynamic generation
+  // { title: "Introduction", id: "introduction" },
 ];
 
 // Add this helper function after getSimilarPosts
+// REMOVE STATIC getAdjacentPosts function
+/*
 const getAdjacentPosts = (currentSlug: string) => {
-  const slugs = Object.keys(blogPosts);
-  const currentIndex = slugs.indexOf(currentSlug);
+  // ... removed static logic ...
+};
+*/
 
-  return {
-    previous:
-      currentIndex > 0 ? blogPosts[slugs[currentIndex - 1] as keyof typeof blogPosts] : null,
-    next:
-      currentIndex < slugs.length - 1
-        ? blogPosts[slugs[currentIndex + 1] as keyof typeof blogPosts]
-        : null,
-  };
+// Helper component to render Strapi blocks
+// TODO: Move this to a separate file (e.g., components/strapi/BlockRenderer.tsx)
+//       and enhance with styling and support for all block types.
+const BlockRenderer: React.FC<{ block: ArticleBlock }> = ({ block }) => {
+  switch (block.__component) {
+    case "shared.rich-text":
+      const trimmedBody = block.body?.trim() || "";
+      return (
+        <div className="max-w-none">
+          <ReactMarkdown
+            components={customMarkdownComponents}
+            remarkPlugins={[remarkGfm]}
+            rehypePlugins={[rehypeRaw]}
+          >
+            {trimmedBody}
+          </ReactMarkdown>
+        </div>
+      );
+    case "blocks.media":
+      // Access file directly from block, then its nested data
+      if (!block.file?.data) return null;
+      const media = block.file.data.attributes;
+      return (
+        <figure className="my-8">
+          <Image
+            src={
+              media?.url
+                ? (process.env.NEXT_PUBLIC_STRAPI_CMS_BASE_URL || "") + media.url
+                : "/placeholder-image.jpg"
+            }
+            alt={media?.alternativeText || "Blog image"}
+            width={media?.width || 800}
+            height={media?.height || 450}
+            className="mx-auto rounded-lg"
+          />
+          {media?.caption && (
+            <figcaption className="mt-2 text-center text-sm text-gray-500">
+              {media.caption}
+            </figcaption>
+          )}
+        </figure>
+      );
+    case "blocks.quote":
+      return (
+        <blockquote className="my-12 rounded-lg border-l-4 border-teal-500 bg-[#0D2A2D] p-8 md:p-12">
+          <div className="mx-auto max-w-3xl">
+            <div className="text-lg italic leading-relaxed text-[#94A3B8] md:text-xl">
+              {block.text}
+            </div>
+            {block.author && (
+              <div className="mt-6 border-t border-[#1E4145] pt-4 text-sm text-[#64748B]">
+                {block.author}
+              </div>
+            )}
+          </div>
+        </blockquote>
+      );
+    // case "blocks.slider":
+    //   // Implement Slider rendering
+    //   return <div>Slider Component Placeholder</div>;
+    default:
+      console.warn(`Unsupported block type: ${block.__component}`);
+      return null;
+  }
 };
 
-// In the BlogPostPage component, add:
-export default function BlogPostPage() {
-  const router = useRouter();
-  const { slug } = router.query;
+// Define TOC item type
+interface TocItem {
+  title: string;
+  id: string;
+  level: number; // Keep track of heading level (e.g., 2 for H2)
+}
 
-  const post = slug && typeof slug === "string" ? blogPosts[slug as keyof typeof blogPosts] : null;
-  const similarPosts = slug && typeof slug === "string" ? getSimilarPosts(slug) : [];
-  const adjacentPosts =
-    slug && typeof slug === "string" ? getAdjacentPosts(slug) : { previous: null, next: null };
+// In the BlogPostPage component, add:
+export default function BlogPostPage({ post }: { post: Article | null }) {
+  const router = useRouter();
+  const [tableOfContents, setTableOfContents] = useState<TocItem[]>([]);
+
+  useEffect(() => {
+    if (!post || !post.blocks) return;
+
+    const tocItems: TocItem[] = [];
+
+    // Find the rich text block(s) - adjust if you have multiple
+    const richTextBlock = post.blocks.find((block) => block.__component === "shared.rich-text");
+
+    if (richTextBlock && "body" in richTextBlock) {
+      const processor = unified().use(remarkParse);
+      const tree = processor.parse(richTextBlock.body);
+
+      visit(tree, "heading", (node) => {
+        // Only process H2 headings for now
+        if (node.depth === 2) {
+          let textContent = "";
+          // Extract text content from children
+          visit(node, "text", (textNode) => {
+            textContent += textNode.value;
+          });
+
+          if (textContent) {
+            tocItems.push({
+              title: textContent,
+              id: slugify(textContent), // Generate ID using the utility
+              level: node.depth,
+            });
+          }
+        }
+      });
+    }
+
+    setTableOfContents(tocItems);
+  }, [post]); // Re-run effect if post data changes
 
   if (router.isFallback || !post) {
     return (
@@ -170,57 +185,114 @@ export default function BlogPostPage() {
     );
   }
 
+  // Prepare props for BlogHeader using direct access on post
+  const headerProps = {
+    title: post.title,
+    excerpt: post.description || "",
+    imageUrl: post.cover?.url
+      ? (process.env.NEXT_PUBLIC_STRAPI_CMS_BASE_URL || "") + post.cover.url
+      : post.coverUrl || "/placeholder-image.jpg",
+    authorName: post.author?.data?.attributes?.name || "Unknown Author",
+    date: new Date(post.publishedAt).toLocaleDateString("en-US", {
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+    }),
+  };
+
   return (
-    <MainLayout title={`${post.title} - Blog`} description={post.excerpt}>
-      <BlogHeader {...post} />
+    <MainLayout title={`${post.title} - Blog`} description={post.description || ""}>
+      <BlogHeader {...headerProps} />
 
       {/* Main Content Area */}
       <div className="bg-[#13161C] py-12">
         <div className="container mx-auto grid max-w-7xl grid-cols-1 gap-12 px-4 lg:grid-cols-3">
-          <article className="prose prose-invert prose-lg prose-p:text-gray-300 prose-headings:text-white prose-a:text-teal-400 hover:prose-a:text-teal-300 prose-strong:text-white prose-blockquote:border-l-teal-500 prose-li:marker:text-teal-400 prose-img:rounded-lg prose-img:mx-auto prose-figcaption:text-gray-400 max-w-none lg:col-span-2">
-            <div dangerouslySetInnerHTML={{ __html: post.content }} />
+          <article className="space-y-6 lg:col-span-2">
+            {/* Render Strapi Blocks directly from post.blocks */}
+            {post.blocks && post.blocks.length > 0 ? (
+              post.blocks.map((block) => (
+                <BlockRenderer key={`${block.__component}-${block.id}`} block={block} />
+              ))
+            ) : (
+              <p className="text-gray-400">Content not available.</p>
+            )}
           </article>
 
+          {/* Pass generated tableOfContents to sidebar */}
           <BlogSidebar post={post} tableOfContents={tableOfContents} />
         </div>
       </div>
-
-      <BlogNavigation previous={adjacentPosts.previous} next={adjacentPosts.next} />
-      <BlogSimilarPosts posts={similarPosts} />
+      {/* TODO: Fetch actual adjacent posts in getStaticProps */}
+      <BlogNavigation previous={null} next={null} />
+      {/* TODO: Fetch actual similar posts in getStaticProps */}
+      <BlogSimilarPosts posts={[]} />
       <BlogCTA />
       <BlogComment />
     </MainLayout>
   );
 }
 
-// If using Next.js SSG (Static Site Generation), define getStaticPaths and getStaticProps
-// Example:
-/*
-export async function getStaticPaths() {
-  // Fetch all possible slugs from your data source
-  const paths = Object.keys(blogPosts).map((slug) => ({
-    params: { slug },
-  }));
+export const getStaticPaths: GetStaticPaths = async () => {
+  console.log("Generating static paths for blog posts...");
+  let paths: { params: { slug: string } }[] = [];
 
-  return {
-    paths,
-    fallback: true, // or false if all paths are known
-  };
-}
+  try {
+    // Fetch all slugs from Strapi
+    const slugs = await fetchAllArticleSlugs();
 
-export async function getStaticProps({ params }) {
-  const slug = params.slug as string;
-  // Fetch post data based on slug
-  const post = blogPosts[slug];
+    // Map the slugs to the format required by getStaticPaths
+    paths = slugs.map((slug) => ({
+      params: { slug },
+    }));
 
-  if (!post) {
-    return { notFound: true };
+    console.log(`Generated ${paths.length} paths.`);
+  } catch (error) {
+    console.error("Error fetching slugs for getStaticPaths:", error);
+    // Return empty paths on error, resulting in 404s for all blog posts
+    paths = [];
   }
 
   return {
-    props: { post },
-    // revalidate: 60, // Optional: ISR (Incremental Static Regeneration)
+    paths,
+    fallback: false, // Required for output: 'export'
   };
-}
-*/
-// Note: The page component needs to accept `post` as a prop if using getStaticProps
+};
+
+export const getStaticProps: GetStaticProps = async (context) => {
+  const slug = context.params?.slug as string;
+  let postData: Article | null = null; // Use the flat Article type
+  let notFound = false;
+
+  if (!slug) {
+    return { notFound: true };
+  }
+
+  try {
+    // Fetch returns StrapiListResponse<Article> where Article is flat
+    const response: StrapiListResponse<Article> = await fetchArticleBySlug(slug);
+
+    // Check if data array has items
+    if (response.data && response.data.length > 0) {
+      postData = response.data[0]; // Assign the first (flat) article object
+    } else {
+      console.log(`No article found for slug: ${slug}`);
+      notFound = true;
+    }
+  } catch (error) {
+    console.error(`Error fetching article with slug ${slug}:`, error);
+    notFound = true;
+  }
+
+  if (notFound) {
+    return { notFound: true };
+  }
+
+  // TODO: Fetch similar/adjacent posts based on the fetched postData (now flat)
+
+  return {
+    props: {
+      post: postData, // Pass the flat article object or null
+    },
+    // No revalidate
+  };
+};
