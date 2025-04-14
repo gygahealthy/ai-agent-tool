@@ -56,6 +56,8 @@ export default function BlogIndexPage({ articles }: BlogIndexPageProps) {
       }
     }
 
+    console.log("DEBUG --> ", finalUrl);
+
     // 4. Final fallback to placeholder
     return finalUrl || "/images/placeholder-image.jpg";
   };

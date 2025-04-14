@@ -253,9 +253,11 @@ export const getStaticPaths: GetStaticPaths = async () => {
     const slugs = await fetchAllArticleSlugs();
 
     // Map the slugs to the format required by getStaticPaths
-    paths = slugs.map((slug) => ({
-      params: { slug },
-    }));
+    paths = slugs
+      .filter((slug) => slug !== null && slug !== undefined)
+      .map((slug) => ({
+        params: { slug: String(slug) }, // Using String() is safer than toString()
+      }));
 
     console.log(`Generated ${paths.length} paths.`);
   } catch (error) {
