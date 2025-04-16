@@ -40,22 +40,45 @@ export const customMarkdownComponents: Components = {
   p: ({ node, ...props }) => (
     <p className="mb-6 text-lg leading-relaxed text-gray-300" {...props} />
   ),
-  a: ({ node, href, ...props }) => {
-    if (href && (href.startsWith("/") || href.startsWith("#"))) {
+  a: ({ node, href, children, ...props }) => {
+    // Safety check for href
+    if (!href) {
+      return <span className="text-gray-400">{children}</span>;
+    }
+
+    // Handle internal links
+    if (href.startsWith("/") || href.startsWith("#")) {
       return (
-        <Link href={href} legacyBehavior>
-          <a className="text-teal-400 transition hover:text-teal-300 hover:underline" {...props} />
+        <Link
+          href={href}
+          className="text-teal-400 transition hover:text-teal-300 hover:underline"
+          {...props}
+        >
+          {children}
         </Link>
       );
     }
+
+    // Handle external links (including affiliate links)
+    // Use stringified href to ensure it works in production
+    const safeHref = String(href);
     return (
       <a
-        href={href}
+        href={safeHref}
         target="_blank"
         rel="noopener noreferrer"
         className="text-teal-400 transition hover:text-teal-300 hover:underline"
+        onClick={(e) => {
+          // Optional: Add analytics tracking for affiliate links
+          if (safeHref.includes("partnerlinks.io")) {
+            console.log("Affiliate link clicked:", safeHref);
+            // Add your analytics code here if needed
+          }
+        }}
         {...props}
-      />
+      >
+        {children}
+      </a>
     );
   },
   ul: ({ node, ...props }) => (
